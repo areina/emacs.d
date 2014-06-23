@@ -1,0 +1,6 @@
+.cask
+*.gpg
+*.dat
+*.eld
+auto-save-list
+url

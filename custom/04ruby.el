@@ -8,6 +8,10 @@
   :init
   (progn
     (use-package ruby-tools)
+    (use-package yard-mode
+      :init
+      (progn
+	(add-hook 'ruby-mode-hook 'yard-mode)))
     (use-package rhtml-mode
       :mode (("\\.rhtml$" . rhtml-mode)
              ("\\.html\\.erb$" . rhtml-mode)))

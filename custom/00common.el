@@ -33,6 +33,13 @@
 (bind-key "\C-c C-k" 'kill-region)
 (bind-key "C-x \\"   'align-current)
 
+;; Lisp & Slime
+
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
+
+;; Packages
+
 (use-package ido
   :init (ido-mode 1)
   :config

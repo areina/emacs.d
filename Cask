@@ -31,6 +31,7 @@
 (depends-on "pallet")
 (depends-on "projectile")
 (depends-on "puppet-mode")
+(depends-on "rainbow-delimiters")
 (depends-on "rainbow-mode")
 (depends-on "restclient")
 (depends-on "robe")

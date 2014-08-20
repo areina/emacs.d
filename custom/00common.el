@@ -106,6 +106,11 @@
   (progn
     (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode))
   :bind (("C->" . mc/mark-next-like-this)
+(use-package rainbow-delimiters
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+
          ("C-<" . mc/mark-previous-like-this)))
 
 (use-package smartparens-config

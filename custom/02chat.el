@@ -2,8 +2,15 @@
 ;;
 ;;; Commentary:
 ;; - ERC settings. Manage slack & freenode accounts. Get some values from secrets.el
+;; - Jabber settings. Manage gtalk account.
 ;;
 ;;; Code:
+
+(require 'use-package)
+
+;;
+;; ERC
+;;
 
 (require 'erc-spelling)
 (erc-spelling-mode 1)
@@ -34,6 +41,20 @@
 
 (add-hook 'erc-mode-hook '(lambda ()
 			    (turn-off-smartparens-mode)))
+
+;;
+;; JABBER
+;;
+
+(use-package jabber
+  :config
+  (progn
+    (setq jabber-account-list
+	  '(("areina0@gmail.com"
+	     (:network-server . "talk.google.com")
+	     (:connection-type . ssl))))
+    (setq jabber-vcard-avatars-retrieve nil)
+    (setq jabber-chat-buffer-show-avatar nil)))
 
 (provide '02chat)
 ;;; 02chat.el ends here

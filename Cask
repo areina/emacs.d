@@ -5,9 +5,9 @@
 
 (depends-on "ac-nrepl")
 (depends-on "ag")
-(depends-on "auto-complete")
 (depends-on "cask")
 (depends-on "cider")
+(depends-on "company")
 (depends-on "clojure-test-mode")
 (depends-on "dash")
 (depends-on "dockerfile-mode")

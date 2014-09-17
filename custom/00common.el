@@ -147,33 +147,10 @@
     (setq flyspell-issue-message-flag)
     (add-hook 'text-mode-hook 'flyspell-mode 1)))
 
-(use-package auto-complete
-  :defer t
-  :init
-  (progn
-    (require 'auto-complete-config)
-    (dolist (mode '(emacs-lisp-mode
-		    clojure-mode
-                    ruby-mode
-                    web-mode))
-      (add-to-list 'ac-modes mode)))
-  :config
-  (progn
-    (ac-config-default)
-    (ac-set-trigger-key "TAB")
-    (ac-set-trigger-key "<tab>")
-    (add-to-list 'completion-styles 'initials t)
-    (add-to-list 'ac-sources 'ac-source-semantic)
-    (semantic-mode t)
-    ;; customization
-    (setq ac-auto-start 2
-	  ac-ignore-case nil
-          ac-delay 0.
-          ac-quick-help-delay 1.
-          ac-use-fuzzy t
-          ac-fuzzy-enable t
-          tab-always-indent 'complete ; use 'complete when auto-complete is disabled
-          ac-dwim t)))
+;; company-mode
+(use-package company
+  :init (global-company-mode)
+  :bind ("M-<tab>" . company-complete))
 
 (defun fd-switch-dictionary()
       (interactive)

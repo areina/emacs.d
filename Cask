@@ -43,6 +43,8 @@
 (depends-on "use-package")
 (depends-on "vlf")
 (depends-on "web-mode")
+(depends-on "wgrep")
+(depends-on "wgrep-ag")
 (depends-on "yaml-mode")
 (depends-on "yard-mode")
 (depends-on "yasnippet")

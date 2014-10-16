@@ -13,6 +13,7 @@
 
 (require 'mu4e)
 (require 'smtpmail)
+(require 'netrc)
 
 (mu4e-maildirs-extension)
 
@@ -100,6 +101,28 @@
   "\\(\\(https?\\://\\|mailto:\\)[-+\[:alnum:\].?_$%/+&#@!*~,:;=/()]+\[[:alnum:]\]\\)"
   "Regexp that matches http:/https:/mailto: URLs; match-string 1
 will contain the matched URL, if any.")
+
+(defun offlineimap-get-password (host port)
+  (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo.gpg")))
+	 (hostentry (netrc-machine netrc host port port)))
+    (when hostentry (netrc-get hostentry "password"))))
+
+(defun clean-my-mu4e-inbox ()
+  (interactive)
+  (mapcar (lambda (x) (apply 'move-emails-by-pattern x)) private-3scale-inbox-rules))
+
+(defun move-emails-by-pattern (target pattern field)
+  (let ((markpair (cons 'move target)))
+    (mu4e-headers-mark-for-each-if markpair (lambda (msg param)
+					      (let* ((do-mark) (value (mu4e-msg-field msg field)))
+						(setq do-mark
+						      (if (member field '(:to :from :cc :bcc :reply-to))
+							  (find-if (lambda (contact)
+								     (let ((name (car contact)) (email (cdr contact)))
+								       (or (and name (string-match pattern name))
+									   (and email (string-match pattern email))))) value)
+							(string-match pattern (or value "")))))))))
+
 
 (provide '03email)
 ;;; 03email.el ends here

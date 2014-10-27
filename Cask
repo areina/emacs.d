@@ -15,6 +15,7 @@
 (depends-on "expand-region")
 (depends-on "flycheck")
 (depends-on "gist")
+(depends-on "git-gutter")
 (depends-on "git-link")
 (depends-on "git-timemachine")
 (depends-on "go-mode")

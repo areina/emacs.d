@@ -4,6 +4,9 @@
 ;;
 ;;; Code:
 
+;; use-package
+(require 'use-package)
+
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
@@ -35,6 +38,23 @@
 
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
+
+(use-package git-gutter
+  :init (global-git-gutter-mode)
+  :config
+  (progn
+    (setq git-gutter:separator-sign " ")
+    (setq git-gutter:lighter " GG")
+    (set-face-background 'git-gutter:deleted "#990A1B")
+    (set-face-foreground 'git-gutter:deleted "#990A1B")
+    (set-face-background 'git-gutter:modified "#00736F")
+    (set-face-foreground 'git-gutter:modified "#00736F")
+    (set-face-background 'git-gutter:added "#546E00")
+    (set-face-foreground 'git-gutter:added "#546E00"))
+  :bind (("C-x p" . git-gutter:previous-hunk)
+	 ("C-x n" . git-gutter:next-hunk)
+	 ("C-x v =" . git-gutter:popup-hunk)
+	 ("C-x v r" . git-gutter:revert-hunk)))
 
 (provide '01lookandfeel)
 ;;; 01lookandfeel.el ends here

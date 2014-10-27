@@ -41,6 +41,7 @@
 (depends-on "smartparens")
 (depends-on "smex")
 (depends-on "solarized-theme")
+(depends-on "toml-mode")
 (depends-on "use-package")
 (depends-on "vlf")
 (depends-on "web-mode")

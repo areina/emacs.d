@@ -26,6 +26,7 @@
 (depends-on "jabber")
 (depends-on "lua-mode")
 (depends-on "magit")
+(depends-on "magit-gh-pulls")
 (depends-on "markdown-mode")
 (depends-on "mu4e-maildirs-extension")
 (depends-on "multiple-cursors")

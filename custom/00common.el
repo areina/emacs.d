@@ -127,9 +127,10 @@
 (use-package restclient)
 
 (use-package helm-dash
-  :init
+  :config
   (progn
     (setq helm-dash-min-length 1)
+    (setq helm-dash-docsets-path (expand-file-name "dash-docsets" user-emacs-directory))
     (setq helm-dash-common-docsets '("Redis" "Go" "Emacs Lisp" "Common Lisp" "Clojure"))
     (setq helm-dash-browser-func 'eww)))
 

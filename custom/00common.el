@@ -38,6 +38,15 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
 
+;; defadvices
+
+(defadvice kill-buffer (around kill-buffer-around-advice activate)
+  "Never kill scratch buffer."
+  (let ((buffer-to-kill (ad-get-arg 0)))
+    (if (equal buffer-to-kill "*scratch*")
+        (bury-buffer)
+      ad-do-it)))
+
 ;; Packages
 
 (use-package iedit

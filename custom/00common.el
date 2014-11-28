@@ -197,5 +197,17 @@
 		     (browse-url txt)))
 	      nil t)))
 
+(defun public-ip ()
+  "Get your public IP."
+  (interactive)
+  (let ((ip (get-public-ip)))
+    (kill-new ip)
+    (message (format "Your IP: %s" ip))))
+
+(defun get-public-ip()
+  "Get your public IP using dig and opendns."
+  (let ((cmd "dig +short myip.opendns.com @resolver1.opendns.com"))
+    (replace-regexp-in-string "\n" "" (shell-command-to-string cmd))))
+
 (provide '00common)
 ;;; 00common.el ends here

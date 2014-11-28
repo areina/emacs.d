@@ -40,6 +40,9 @@
 
 ;; Packages
 
+(use-package iedit
+  :bind ("C-;" . iedit-mode))
+
 (use-package ido
   :init (ido-mode 1)
   :config

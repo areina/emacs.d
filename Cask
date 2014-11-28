@@ -24,6 +24,7 @@
 (depends-on "helm-dash")
 (depends-on "highlight-indentation")
 (depends-on "jabber")
+(depends-on "iedit")
 (depends-on "lua-mode")
 (depends-on "magit")
 (depends-on "magit-gh-pulls")

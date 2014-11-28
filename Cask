@@ -3,6 +3,7 @@
 (source melpa)
 (source org)
 
+(depends-on "aggresive-indent")
 (depends-on "ag")
 (depends-on "cask")
 (depends-on "cider")

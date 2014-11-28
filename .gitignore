@@ -6,3 +6,5 @@ auto-save-list
 url
 semanticdb
 var
+dash-docsets/
+org-sync/

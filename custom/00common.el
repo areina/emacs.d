@@ -48,6 +48,12 @@
   (progn
     (global-aggressive-indent-mode 1)))
 
+(use-package dired
+  :config
+  (progn
+    (setq dired-recursive-copies 'always
+          dired-recursive-deletes 'always)))
+
 (use-package ido
   :init (ido-mode 1)
   :config

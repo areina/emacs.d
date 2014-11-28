@@ -54,7 +54,9 @@
 
 (use-package saveplace
   :defer t
-  :config (setq-default save-place t))
+  :config
+  (setq-default save-place t)
+  (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
 
 (use-package exec-path-from-shell
   :defer t

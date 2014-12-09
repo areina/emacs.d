@@ -106,9 +106,6 @@
   :init (smex-initialize)
   :bind ("M-x" . smex))
 
-(use-package magit
-  :bind ("C-x g" . magit-status))
-
 (use-package google-translate
   :init
   (progn

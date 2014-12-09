@@ -34,6 +34,7 @@
 (load "05clojure.el")
 (load "06org.el")
 (load "07elisp.el")
+(load "08vc.el")
 
 (provide 'init)
 ;;; init.el ends here

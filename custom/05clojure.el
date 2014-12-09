@@ -5,9 +5,6 @@
 ;;; Code:
 
 (use-package cider
-  :init
-  (progn
-    (use-package ac-nrepl))
   :config
   (progn
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)

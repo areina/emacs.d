@@ -52,11 +52,6 @@
 (use-package iedit
   :bind ("C-;" . iedit-mode))
 
-(use-package aggressive-indent
-  :init
-  (progn
-    (global-aggressive-indent-mode 1)))
-
 (use-package dired
   :config
   (progn

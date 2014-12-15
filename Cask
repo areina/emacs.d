@@ -19,6 +19,7 @@
 (depends-on "git-link")
 (depends-on "git-timemachine")
 (depends-on "go-mode")
+(depends-on "golden-ratio")
 (depends-on "google-translate")
 (depends-on "helm")
 (depends-on "helm-dash")

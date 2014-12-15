@@ -39,6 +39,11 @@
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
 
+(use-package golden-ratio
+  :diminish " φ"
+  :init
+  (golden-ratio-mode 1))
+
 (use-package git-gutter
   :init (global-git-gutter-mode)
   :config

@@ -61,5 +61,13 @@
 	 ("C-x v =" . git-gutter:popup-hunk)
 	 ("C-x v r" . git-gutter:revert-hunk)))
 
+(defun my/add-watchwords ()
+  "Highlight FIXME, TODO, and NOCOMMIT in code"
+  (font-lock-add-keywords
+   nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
+          1 '((:foreground "#d7a3ad") (:weight bold)) t))))
+
+(add-hook 'prog-mode-hook 'my/add-watchwords)
+
 (provide '01lookandfeel)
 ;;; 01lookandfeel.el ends here

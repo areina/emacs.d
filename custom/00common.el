@@ -149,6 +149,9 @@
   (progn
     (setq ag-highlight-search t)))
 
+(use-package wgrep)
+(use-package wgrep-ag)
+
 (use-package eww
   :init
   (progn

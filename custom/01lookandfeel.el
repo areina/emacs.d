@@ -30,6 +30,7 @@
 
 ;; Show trailing whitespace
 (setq-default show-trailing-whitespace t)
+(setq-default whitespace-line-column 80)
 
 (use-package solarized-theme
   :init

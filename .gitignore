@@ -11,3 +11,5 @@ org-sync/
 .cider_repl_history
 .places
 tramp
+*.log
+*.data

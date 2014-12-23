@@ -12,15 +12,16 @@
 ;; Package manager
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
-(require 'pallet)
+
+(require 'use-package)
+
+(use-package pallet
+  :init (pallet-mode t))
 
 ;; Emacs server
 (require 'server)
 (unless (server-running-p)
   (server-start))
-
-;; use-package
-(require 'use-package)
 
 ;; Add ~/.emacs.d/custom/ to load-path
 (add-to-list 'load-path (expand-file-name "custom" user-emacs-directory))

@@ -47,6 +47,38 @@
         (bury-buffer)
       ad-do-it)))
 
+;; auto saving
+;;https://github.com/mwfogleman/config/blob/master/home/.emacs.d/michael.org#saving 
+
+(defun auto-save-command ()
+  (let* ((basic (and buffer-file-name
+                     (buffer-modified-p (current-buffer))
+                     (file-writable-p buffer-file-name)
+                     (not org-src-mode)))
+         (proj (and (projectile-project-p)
+                    basic)))
+    (if proj
+        (projectile-save-project-buffers)
+      (when basic
+        (save-buffer)))))
+
+(defmacro advise-commands (advice-name commands class &rest body)
+  "Apply advice named ADVICE-NAME to multiple COMMANDS.
+The body of the advice is in BODY."
+  `(progn
+     ,@(mapcar (lambda (command)
+                 `(defadvice ,command (,class ,(intern (concat (symbol-name command) "-" advice-name)) activate)
+                    ,@body))
+               commands)))
+
+(advise-commands "auto-save"
+                 (ido-switch-buffer ace-window magit-status windmove-up windmove-down windmove-left windmove-right)
+                 before
+                 (auto-save-command))
+
+(add-hook 'mouse-leave-buffer-hook 'auto-save-command)
+(add-hook 'focus-out-hook 'auto-save-command)
+
 ;; Packages
 
 (use-package iedit

@@ -35,6 +35,7 @@
 (depends-on "mu4e-maildirs-extension")
 (depends-on "multiple-cursors")
 (depends-on "pallet")
+(depends-on "paradox")
 (depends-on "projectile")
 (depends-on "puppet-mode")
 (depends-on "rainbow-delimiters")

@@ -181,6 +181,11 @@
   :init (global-company-mode)
   :bind ("M-<tab>" . company-complete))
 
+(use-package paradox
+  :ensure t
+  :config
+  (setq paradox-execute-asynchronously t))
+
 (defun fd-switch-dictionary()
       (interactive)
       (let* ((dic ispell-current-dictionary)

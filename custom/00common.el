@@ -75,10 +75,6 @@
   (setq-default save-place t)
   (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
 
-(use-package exec-path-from-shell
-  :defer t
-  :init (exec-path-from-shell-initialize))
-
 (use-package projectile
   :defer t
   :init (projectile-global-mode))

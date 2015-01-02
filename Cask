@@ -11,7 +11,6 @@
 (depends-on "dockerfile-mode")
 (depends-on "elisp-slime-nav")
 (depends-on "erc-image")
-(depends-on "exec-path-from-shell")
 (depends-on "expand-region")
 (depends-on "eww-lnum")
 (depends-on "flycheck")

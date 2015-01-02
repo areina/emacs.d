@@ -15,6 +15,7 @@
 (depends-on "expand-region")
 (depends-on "eww-lnum")
 (depends-on "flycheck")
+(depends-on "flycheck-package")
 (depends-on "gist")
 (depends-on "git-gutter")
 (depends-on "git-link")

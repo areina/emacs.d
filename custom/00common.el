@@ -88,7 +88,10 @@
   :config
   (progn
     (setq flycheck-display-errors-function nil)
-    (add-hook 'after-init-hook 'global-flycheck-mode)))
+    (add-hook 'after-init-hook 'global-flycheck-mode))
+  :init
+  (progn
+    (use-package flycheck-package)))
 
 (use-package yasnippet
   :init

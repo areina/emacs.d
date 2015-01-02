@@ -13,6 +13,7 @@
 (depends-on "erc-image")
 (depends-on "exec-path-from-shell")
 (depends-on "expand-region")
+(depends-on "eww-lnum")
 (depends-on "flycheck")
 (depends-on "gist")
 (depends-on "git-gutter")

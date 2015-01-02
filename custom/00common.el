@@ -154,6 +154,11 @@
 
 (use-package eww
   :init
+  (use-package eww-lnum
+    :ensure t
+    :init
+    (progn (define-key eww-mode-map "f" 'eww-lnum-follow)
+	      (define-key eww-mode-map "F" 'eww-lnum-universal)))
   (progn
     (add-hook 'eww-mode-hook
 	      (lambda()

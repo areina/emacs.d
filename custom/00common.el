@@ -4,6 +4,8 @@
 ;;
 ;;; Code:
 
+(require 'use-package)
+
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 

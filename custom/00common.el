@@ -126,16 +126,16 @@
     (setq helm-dash-common-docsets '("Redis" "Go" "Emacs Lisp" "Common Lisp" "Clojure"))
     (setq helm-dash-browser-func 'eww)))
 
-(use-package multiple-cursors
-  :config
-  (progn
-    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode))
-  :bind (("C->" . mc/mark-next-like-this)
 (use-package rainbow-delimiters
   :init
   (progn
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
+(use-package multiple-cursors
+  :config
+  (progn
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode))
+  :bind (("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)))
 
 (use-package smartparens-config

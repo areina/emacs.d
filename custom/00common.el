@@ -8,10 +8,15 @@
 
 (setq auto-save-default nil)
 (setq make-backup-files nil)
+(setq history-length 1000)
 
 ;; Set default browser
-(setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "conkeror")
+
+(use-package browse-url
+  :defer t
+  :config
+  (setq browse-url-generic-program (executable-find "conkeror")
+	browse-url-browser-function #'eww-browse-url))
 
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -35,10 +40,10 @@
 (bind-key "\C-c C-k" 'kill-region)
 (bind-key "C-x \\"   'align-current)
 
-;; Lisp & Slime
-
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
+;;http://endlessparentheses.com/Meta-Binds-Part-1%253A-Drunk-in-the-Dark.html
+(global-set-key "\M-9" 'backward-sexp)
+(global-set-key "\M-0" 'forward-sexp)
+(global-set-key "\M-1" 'delete-other-windows)
 
 ;; defadvices
 
@@ -56,7 +61,8 @@
   (let* ((basic (and buffer-file-name
                      (buffer-modified-p (current-buffer))
                      (file-writable-p buffer-file-name)
-                     (not org-src-mode)))
+                     ;; (not org-src-mode)
+		     ))
          (proj (and (projectile-project-p)
                     basic)))
     (if proj
@@ -83,7 +89,18 @@ The body of the advice is in BODY."
 
 ;; Packages
 
+;; Lisp & Slime
+
+(use-package slime
+  :disabled t
+  :defer t
+  :init
+  (progn
+    (load (expand-file-name "~/quicklisp/slime-helper.el"))
+    (setq inferior-lisp-program "sbcl")))
+
 (use-package iedit
+  :ensure t
   :bind ("C-;" . iedit-mode))
 
 (use-package dired
@@ -102,6 +119,7 @@ The body of the advice is in BODY."
     (setq ido-max-prospects 10)))
 
 (use-package expand-region
+  :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package saveplace
@@ -110,35 +128,49 @@ The body of the advice is in BODY."
   (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
 
 (use-package projectile
+  :ensure t
   :defer t
+  :diminish projectile-mode
   :init (projectile-global-mode))
 
 (use-package flycheck
-  :config
-  (progn
-    (setq flycheck-display-errors-function nil)
-    (add-hook 'after-init-hook 'global-flycheck-mode))
+  :ensure t
   :init
   (progn
-    (use-package flycheck-package)))
+    (global-flycheck-mode)
+    (use-package flycheck-package
+      :ensure t)))
 
 (use-package yasnippet
-  :init
+  :ensure t
+  :defer t
+  :idle (yas-global-mode t)
+  :config
   (progn
-    (let ((snippets-dir (expand-file-name "snippets" user-emacs-directory)))
-      (yas-load-directory snippets-dir)
-      (setq yas-snippets-dir snippets-dir))
-    (yas-global-mode 1)
-    (setq-default yas/prompt-functions '(yas/ido-prompt))))
+    (setq yas-verbosity 1
+          yas-prompt-functions '(yas-ido-prompt)
+          yas-snippet-dirs (expand-file-name "snippets" user-emacs-directory))))
+
+(use-package vlf
+  :ensure t)
+
+(use-package sass-mode
+  :ensure t)
+
+(use-package toml-mode
+  :ensure t)
 
 (use-package yaml-mode
+  :ensure t
   :mode ("\\.yml$" . yaml-mode))
 
 (use-package smex
+  :ensure t
   :init (smex-initialize)
   :bind ("M-x" . smex))
 
 (use-package google-translate
+  :ensure t
   :init
   (progn
     (setq google-translate-default-target-language "es")
@@ -148,81 +180,214 @@ The body of the advice is in BODY."
 	 ("C-c r" . google-translate-at-point-reverse)
 	 ("C-c R" . google-translate-query-translate-reverse)))
 
-(use-package restclient)
+(use-package web-mode
+  :ensure t)
+
+(use-package restclient
+  :defer t
+  :ensure t)
 
 (use-package helm-dash
-  :config
+  :ensure t
+  :defer t
+  :init
   (progn
     (setq helm-dash-min-length 1)
     (setq helm-dash-docsets-path (expand-file-name "dash-docsets" user-emacs-directory))
     (setq helm-dash-common-docsets '("Redis" "Go" "Emacs Lisp" "Common Lisp" "Clojure"))
     (setq helm-dash-browser-func 'eww)))
 
-(use-package rainbow-delimiters
-  :init
-  (progn
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+(use-package browse-kill-ring
+  :ensure t
+  :bind (("C-c y" . browse-kill-ring)))
 
-(use-package multiple-cursors
+(use-package align
+  :bind (("C-c A a" . align)
+	 ("C-c A c" . align-current)
+	 ("C-c A r" . align-regexp)))
+
+
+(use-package multiple-cursors ; Edit text with multiple cursors
+  :ensure t
+  :bind (("C-c m e" . mc/mark-more-like-this-extended)
+	 ("C-c m h" . mc/mark-all-like-this-dwim)
+	 ("C-c m l" . mc/edit-lines)
+	 ("C-c m n" . mc/mark-next-like-this)
+	 ("C-c m p" . mc/mark-previous-like-this)
+	 ("C-c m r" . vr/mc-mark)
+	 ("C-c m C-a" . mc/edit-beginnings-of-lines)
+	 ("C-c m C-e" . mc/edit-ends-of-lines)
+	 ("C-c m C-s" . mc/mark-all-in-region))
   :config
   (progn
-    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode))
-  :bind (("C->" . mc/mark-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)))
+    (setq mc/mode-line
+	  ;; Simplify the MC mode line indicator
+	  '(:propertize (:eval (concat " " (number-to-string (mc/num-cursors))))
+			face font-lock-warning-face))
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)))
 
-(use-package smartparens-config
-  :init
-  (progn
-    (smartparens-global-mode 1)
-    (show-smartparens-global-mode 1)))
+(use-package visual-regexp ; Regexp replace with in-buffer display
+  :ensure t
+  :bind (("C-c r" . vr/query-replace)
+	 ("C-c R" . vr/replace)))
+
+
+(use-package delsel ; Delete the selection instead of insert
+  :defer t
+  :init (delete-selection-mode))
+
+(use-package smartparens
+  :ensure t
+  :commands (smartparens-mode show-smartparens-mode)
+  :config (require 'smartparens-config))
+
+;; (use-package smartparens-config
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (setq sp-ignore-modes-list (append sp-ignore-modes-list '(magit-log-mode magit-key-mode)))
+;;     (smartparens-global-mode 1)
+;;     (show-smartparens-global-mode 1)
+;;     (define-key sp-keymap (kbd "M-s") 'sp-splice-sexp)
+;;     (define-key sp-keymap (kbd "C-<right>") #'sp-forward-slurp-sexp)))
+
+(use-package esup
+  :ensure t)
 
 (use-package ag
+  :ensure t
   :config
   (progn
     (setq ag-highlight-search t)))
 
-(use-package wgrep)
-(use-package wgrep-ag)
+(use-package wgrep
+  :ensure t
+  :defer t)
+
+(use-package wgrep-ag
+  :ensure t
+  :defer t)
 
 (use-package eww
+  :defer t
   :init
-  (use-package eww-lnum
-    :ensure t
-    :init
-    (progn (define-key eww-mode-map "f" 'eww-lnum-follow)
-	      (define-key eww-mode-map "F" 'eww-lnum-universal)))
   (progn
-    (add-hook 'eww-mode-hook
-	      (lambda()
-		(setq show-trailing-whitespace nil)))))
+    (defun oww-down (arg)
+      (interactive "p")
+      (if (bolp)
+	  (progn
+	    (forward-paragraph arg)
+	    (forward-line 1))
+	(line-move arg)))
+
+    (defun oww-up (arg)
+      (interactive "p")
+      (if (bolp)
+	  (progn
+	    (forward-line -1)
+	    (backward-paragraph arg)
+	    (forward-line 1))
+	(line-move (- arg))))
+
+    (defun oww-mode-hook ()
+      (define-key eww-mode-map "o" 'eww)
+      (define-key eww-mode-map "n" 'oww-down)
+      (define-key eww-mode-map "N" 'eww-next-url)
+      (define-key eww-mode-map "p" 'oww-up)
+      (define-key eww-mode-map "P" 'eww-previous-url)
+      (define-key eww-mode-map "v" 'recenter-top-bottom)
+      (define-key eww-mode-map "V" 'eww-view-source))
+
+    (add-hook 'eww-mode-hook 'oww-mode-hook)
+    (use-package eww-lnum
+      :ensure t
+      :defer t
+      :init
+      (progn
+	(with-eval-after-load 'eww
+	  (define-key eww-mode-map "f" (lambda() (interactive) (eww-lnum-follow 4)))
+	  (define-key eww-mode-map "F" 'eww-lnum-universal)))))
+  :config
+  (setq shr-external-browser 'browse-url-generic))
+
+(use-package ispell
+  :defer t
+  :config
+  (progn
+    (setq ispell-program-name "aspell" ; use aspell instead of ispell
+	  ispell-extra-args '("--sug-mode=ultra")
+	  ispell-list-command "--list")))
 
 (use-package flyspell
   :init
   (progn
-    (setq ispell-program-name "aspell" ; use aspell instead of ispell
-	  ispell-extra-args '("--sug-mode=ultra"))
-    (setq ispell-list-command "--list")
-    (setq flyspell-issue-message-flag)
-    (add-hook 'text-mode-hook 'flyspell-mode 1)))
-
-;; company-mode
-(use-package company
-  :init (global-company-mode)
-  :bind ("M-<tab>" . company-complete))
-
-(use-package paradox
-  :ensure t
+    (dolist (hook '(text-mode-hook message-mode-hook))
+      (add-hook hook 'turn-on-flyspell))
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
   :config
+  (progn
+    (setq flyspell-issue-message-flag nil)))
+
+(use-package company
+  :ensure t
+  :defer t
+  :idle (global-company-mode)
+  :config
+  (progn
+    ;; Use Company for completion
+    (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+    (setq company-tooltip-align-annotations t
+	  ;; Easy navigation to candidates with M-<n>
+	  company-show-numbers t))
+  :diminish company-mode)
+
+(use-package paradox ; Better package menu
+  :ensure t
+  :defer t
+  :config
+  ;; Don't ask for a token, please
+  (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
+(use-package puppet-mode
+  :ensure t
+  :defer t)
+
+(use-package markdown-mode
+  :ensure t
+  :defer t)
+
+(use-package lua-mode
+  :ensure t
+  :defer t)
+
+(use-package go-mode
+  :ensure t
+  :defer t)
+
+(use-package dockerfile-mode
+  :ensure t
+  :defer t)
+
+(use-package elfeed
+  :ensure t
+  :defer t
+  :config
+  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)))
+
+(use-package find-func
+  :bind (("C-x F" . find-function-at-point)
+	 ("C-x V" . find-variable-at-point)
+	 ("C-x K" . find-function-on-key)))
+
 (defun fd-switch-dictionary()
-      (interactive)
-      (let* ((dic ispell-current-dictionary)
+  (interactive)
+  (let* ((dic ispell-current-dictionary)
     	 (change (if (string= dic "spanish") "english" "spanish")))
-        (ispell-change-dictionary change)
-        (message "Dictionary switched from %s to %s" dic change)
-        ))
-      (global-set-key (kbd "<f8>")   'fd-switch-dictionary)
+    (ispell-change-dictionary change)
+    (message "Dictionary switched from %s to %s" dic change)
+    ))
+(global-set-key (kbd "<f8>")   'fd-switch-dictionary)
 
 (defun t-pull-request()
   (interactive)

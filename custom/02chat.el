@@ -7,54 +7,117 @@
 ;;; Code:
 
 (require 'use-package)
-
+(require 's)
+(require 'secrets)
 ;;
 ;; ERC
 ;;
 
-(require 'erc-spelling)
-(erc-spelling-mode 1)
+(use-package erc
+  :defer t
+  :init
+  (progn
+    (use-package erc-join
+      :config
+      (progn
+      (erc-autojoin-mode t)
+      (setq erc-join-buffer 'bury
+	    erc-autojoin-channels-alist
+	    (list `(".*\\.freenode.net" ,@irc-freenode-auto-join-channels)))))
 
-(defun start-irc ()
-  "Connect to IRC."
-  (interactive)
-  (erc-tls :server "3scale.irc.slack.com" :port 6667
-           :nick "toni" :password slack-nick-passwd :full-name "toni")
-  (erc :server "irc.freenode.net" :port 6667
-       :nick "kablaam" :password irc-freenode-nick-passwd :full-name "kablaam"))
+    (use-package erc-track
+      :config
+      (progn
+	(erc-track-mode t)
+	(setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+					"324" "329" "332" "333" "353" "477"))))
 
-(erc-autojoin-mode t)
-(setq erc-auto-query 'buffer)
+    (add-hook 'erc-mode-hook '(lambda ()
+				(turn-off-smartparens-mode)))
 
-(setq erc-autojoin-channels-alist (list `(".*\\.freenode.net" ,@irc-freenode-auto-join-channels)))
+    (defun start-irc ()
+      "Connect to IRC."
+      (interactive)
+      (erc-tls :server "3scale.irc.slack.com"
+	       :port 6667
+	       :nick "toni"
+	       :password slack-nick-passwd
+	       :full-name "toni")
+      (erc :server "irc.freenode.net"
+	   :port 6667
+	   :nick "kablaam"
+	   :password irc-freenode-nick-passwd
+	   :full-name "kablaam")))
+  :config
+  (progn
+    (setq erc-prompt-for-nickserv-password nil
+          erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE")
+	  erc-auto-query 'buffer
+	  erc-server-auto-reconnect t
+	  erc-server-reconnect-attempts 5
+	  erc-server-reconnect-timeout 3)
 
-(setq erc-server-auto-reconnect t)
-(setq erc-server-reconnect-attempts 5)
-(setq erc-server-reconnect-timeout 3)
+    ;; highlighting nicks
+    (use-package erc-hl-nicks
+      :ensure t
+      :init (add-to-list 'erc-modules 'hl-nicks))
+    (use-package erc-services
+      :init
+      (progn
+	(add-to-list 'erc-modules 'spelling)
+	(erc-services-mode 1)
+	(erc-spelling-mode 1)))
+    (use-package erc-tweet
+      :disabled t
+      :init
+      (progn
+	(add-to-list 'erc-modules 'tweet)))
+    (use-package erc-image
+      :ensure t
+      :defer t
+      :init
+      (progn
+	(add-to-list 'erc-modules 'image)))
+    (use-package erc-youtube
+      :disabled t
+      :init
+      (progn
+	(add-to-list 'erc-modules 'youtube)))
+    (use-package erc-replace
+      :init
+      (progn
+	(defvar toni-erc-clean-gh-new-branch-regex
+	  "New branch \"https://.*/\\(.*\\)\" was pushed by \\(.*\\)")
 
-;; check channels
-(erc-track-mode t)
-(setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-                                 "324" "329" "332" "333" "353" "477"))
-;; don't show any of this
-(setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE"))
+	(defun toni-erc-clean-gh-new-branch (match)
+	  ""
+	  (let* ((matches (cdr (s-match toni-erc-clean-gh-new-branch-regex match)))
+		 (branch (car matches))
+		 (by (cadr matches)))
+	    (format "new branch \"%s\" by %s" branch by)))
 
-(add-hook 'erc-mode-hook '(lambda ()
-			    (turn-off-smartparens-mode)))
+	(add-to-list 'erc-modules 'replace)
+	(add-to-list 'erc-replace-alist '(toni-erc-clean-gh-new-branch-regex . toni-erc-clean-gh-new-branch))
+	(add-hook 'erc-insert-modify-hook 'erc-replace-insert)
+	(add-hook 'erc-send-modify-hook 'erc-replace-insert)))
+    (erc-update-modules)))
 
 ;;
 ;; JABBER
 ;;
 
 (use-package jabber
+  :ensure t
+  :defer t
   :config
   (progn
-    (setq jabber-account-list
-	  '(("areina0@gmail.com"
-	     (:network-server . "talk.google.com")
-	     (:connection-type . ssl))))
-    (setq jabber-vcard-avatars-retrieve nil)
-    (setq jabber-chat-buffer-show-avatar nil)))
+    (setq jabber-chat-buffer-show-avatar nil
+	  jabber-vcard-avatars-retrieve nil
+	  jabber-alert-presence-hooks nil
+	  jabber-account-list `(("areina0@gmail.com"
+				 (:network-server . "talk.google.com")
+				 (:password . ,gmail-jabber-passwd)
+				 (:connection-type . ssl))))))
 
 (provide '02chat)
 ;;; 02chat.el ends here

@@ -5,17 +5,24 @@
 ;;; Code:
 
 (use-package ruby-mode
+  :ensure t
   :init
   (progn
-    (use-package ruby-tools)
+    (use-package ruby-tools
+      :ensure t)
+    (use-package ruby-hash-syntax
+      :ensure t)
     (use-package yard-mode
+      :ensure t
       :init
       (progn
 	(add-hook 'ruby-mode-hook 'yard-mode)))
     (use-package rhtml-mode
+      :ensure t
       :mode (("\\.rhtml$" . rhtml-mode)
              ("\\.html\\.erb$" . rhtml-mode)))
     (use-package highlight-indentation
+      :ensure t
       :init
       (progn
 	(highlight-indentation-current-column-mode))
@@ -23,11 +30,15 @@
       (progn
 	(set-face-background 'highlight-indentation-current-column-face "#073642")))
     (use-package robe
+      :defer t
+      :ensure t
       :init
       (progn
 	(add-hook 'ruby-mode-hook 'robe-mode)
-	(push 'company-robe company-backends)))
+	(with-eval-after-load 'company
+	  (add-to-list 'company-backends 'company-robe))))
     (use-package rspec-mode
+      :ensure t
       :config
       (progn
         ;; (setq rspec-use-rvm t)
@@ -39,7 +50,6 @@
   :config
   (progn
     (setq ruby-deep-indent-paren nil)
-    (require 'align)
     (defconst align-ruby-modes '(ruby-mode)
       "align-ruby-modes is a variable defined in `align.el'.")
 
@@ -58,8 +68,9 @@
       "Alignment rules specific to the ruby mode.
 See the variable `align-rules-list' for more details.")
 
-    (dolist (it ruby-align-rules-list)
-      (add-to-list 'align-rules-list it)))
+    (with-eval-after-load 'align
+      (dolist (it ruby-align-rules-list)
+	(add-to-list 'align-rules-list it))))
 
   :bind (("C-M-h" . backward-kill-word)
          ("C-M-n" . scroll-up-five)

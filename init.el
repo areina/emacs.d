@@ -8,20 +8,25 @@
 ;;
 ;;; Code:
 
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
 
-;; Package manager
-(require 'cask "~/.cask/cask.el")
-(cask-initialize)
-
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 (require 'use-package)
+(setq use-package-verbose t)
 
-(use-package pallet
-  :init (pallet-mode t))
+(use-package server
+  :defer t
+  :idle (server-start))
 
-;; Emacs server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+;; (require 'server)
+;; (unless (server-running-p)
+;;   (server-start))
 
 ;; Add ~/.emacs.d/custom/ to load-path
 (add-to-list 'load-path (expand-file-name "custom" user-emacs-directory))

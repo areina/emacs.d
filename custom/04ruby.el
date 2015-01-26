@@ -9,11 +9,13 @@
   :init
   (progn
     (use-package ruby-tools
+      :diminish ruby-tools-mode
       :ensure t)
     (use-package ruby-hash-syntax
       :ensure t)
     (use-package yard-mode
       :ensure t
+      :diminish yard-mode
       :init
       (progn
 	(add-hook 'ruby-mode-hook 'yard-mode)))

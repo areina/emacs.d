@@ -175,10 +175,10 @@ The body of the advice is in BODY."
   (progn
     (setq google-translate-default-target-language "es")
     (setq google-translate-default-source-language "en"))
-  :bind (("C-c t" . google-translate-at-point)
-	 ("C-c T" . google-translate-query-translate)
-	 ("C-c r" . google-translate-at-point-reverse)
-	 ("C-c R" . google-translate-query-translate-reverse)))
+  :bind (("C-x t" . google-translate-at-point)
+	 ("C-x T" . google-translate-query-translate)
+	 ("C-x r" . google-translate-at-point-reverse)
+	 ("C-x R" . google-translate-query-translate-reverse)))
 
 (use-package web-mode
   :ensure t)

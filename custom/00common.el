@@ -341,6 +341,16 @@ The body of the advice is in BODY."
 	  company-show-numbers t))
   :diminish company-mode)
 
+(use-package hungry-delete
+  :ensure t
+  :defer t
+  :idle (global-hungry-delete-mode))
+
+(use-package highlight-symbol
+  :ensure t
+  :bind (("M-n" . highlight-symbol-next)
+         ("M-p" . highlight-symbol-prev)))
+
 (use-package paradox ; Better package menu
   :ensure t
   :defer t

@@ -5,6 +5,8 @@
 ;;; Code:
 
 (use-package cider
+  :ensure t
+  :defer t
   :config
   (progn
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)

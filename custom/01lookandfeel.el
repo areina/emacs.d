@@ -28,25 +28,59 @@
 ;; y-or-n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Show trailing whitespace
-(setq-default show-trailing-whitespace t)
-(setq-default whitespace-line-column 80)
+(setq-default fill-column 80)
+(add-hook 'text-mode-hook #'auto-fill-mode)
 
-(use-package solarized-theme
+(use-package whitespace
   :init
-  (progn
-    (load-theme 'solarized-dark t)))
+  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  :config
+  (setq whitespace-style '(face indentation space-after-tab space-before-tab
+				empty trailing lines-tail)
+	whitespace-line-column nil)
+  :diminish whitespace-mode)
+
+(use-package solarized
+  :ensure solarized-theme
+  :defer t
+  :init (load-theme 'solarized-dark 'no-confirm))
 
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
 
+(use-package hl-line
+  :init (global-hl-line-mode 1))
+
+(use-package paren ; Highlight paired delimiters
+  :init (show-paren-mode)
+  :config (setq show-paren-when-point-inside-paren t
+		show-paren-when-point-in-periphery t))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :defer t
+  :init (dolist (hook '(text-mode-hook prog-mode-hook))
+	  (add-hook hook #'rainbow-delimiters-mode)))
+
+(use-package rainbow-mode
+  :ensure t)
+
+(use-package hi-lock
+  :defer t
+  :init (global-hi-lock-mode))
+
 (use-package golden-ratio
+  :defer t
+  :ensure t
   :diminish " φ"
   :init
   (golden-ratio-mode 1))
 
 (use-package git-gutter
-  :init (global-git-gutter-mode)
+  :ensure t
+  :idle (global-git-gutter-mode)
+  :diminish git-gutter-mode
   :config
   (progn
     (setq git-gutter:separator-sign " ")

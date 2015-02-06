@@ -13,3 +13,6 @@ org-sync/
 tramp
 *.log
 *.data
+elpa
+.sx
+elfeed/

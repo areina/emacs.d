@@ -107,7 +107,8 @@ The body of the advice is in BODY."
   :config
   (progn
     (setq dired-recursive-copies 'always
-          dired-recursive-deletes 'always)))
+          dired-recursive-deletes 'always
+	  dired-dwim-target t)))
 
 (use-package ido
   :init (ido-mode 1)

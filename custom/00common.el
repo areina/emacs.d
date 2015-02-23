@@ -168,6 +168,9 @@ The body of the advice is in BODY."
 (use-package smex
   :ensure t
   :init (smex-initialize)
+  :config
+  (progn
+    (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
   :bind ("M-x" . smex))
 
 (use-package google-translate

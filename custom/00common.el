@@ -16,8 +16,8 @@
   :defer t
   :config
   (setq browse-url-generic-program (executable-find "conkeror")
-	browse-url-browser-function #'eww-browse-url))
-
+	browse-url-browser-function '(("github" . browse-url-default-browser)
+				      ("." . eww-browse-url))))
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)

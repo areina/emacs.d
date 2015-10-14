@@ -13,7 +13,6 @@
 ;; Set default browser
 
 (use-package browse-url
-  :defer t
   :config
   (setq browse-url-generic-program (executable-find "conkeror")
 	browse-url-browser-function '(("github" . browse-url-default-browser)
@@ -93,8 +92,8 @@ The body of the advice is in BODY."
 
 (use-package slime
   :disabled t
-  :defer t
-  :init
+  :defer 5
+  :config
   (progn
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
     (setq inferior-lisp-program "sbcl")))
@@ -130,9 +129,10 @@ The body of the advice is in BODY."
 
 (use-package projectile
   :ensure t
-  :defer t
   :diminish projectile-mode
-  :init (projectile-global-mode))
+  :config
+  (progn
+    (projectile-global-mode)))
 
 (use-package flycheck
   :ensure t
@@ -144,10 +144,10 @@ The body of the advice is in BODY."
 
 (use-package yasnippet
   :ensure t
-  :defer t
-  :idle (yas-global-mode t)
+  :defer 5
   :config
   (progn
+    (yas-global-mode t)
     (setq yas-verbosity 1
           yas-prompt-functions '(yas-ido-prompt)
           yas-snippet-dirs (expand-file-name "snippets" user-emacs-directory))))
@@ -156,7 +156,8 @@ The body of the advice is in BODY."
   :ensure t)
 
 (use-package sass-mode
-  :ensure t)
+  :ensure t
+  :disabled t)
 
 (use-package toml-mode
   :ensure t)
@@ -188,13 +189,14 @@ The body of the advice is in BODY."
   :ensure t)
 
 (use-package restclient
-  :defer t
+  :ensure t)
+
+(use-package helm
   :ensure t)
 
 (use-package helm-dash
   :ensure t
-  :defer t
-  :init
+  :config
   (progn
     (setq helm-dash-min-length 1)
     (setq helm-dash-docsets-path (expand-file-name "dash-docsets" user-emacs-directory))
@@ -237,8 +239,8 @@ The body of the advice is in BODY."
 
 
 (use-package delsel ; Delete the selection instead of insert
-  :defer t
-  :init (delete-selection-mode))
+  :config
+  (delete-selection-mode))
 
 (use-package smartparens
   :ensure t
@@ -265,15 +267,12 @@ The body of the advice is in BODY."
     (setq ag-highlight-search t)))
 
 (use-package wgrep
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package wgrep-ag
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package eww
-  :defer t
   :init
   (progn
     (defun oww-down (arg)
@@ -315,7 +314,6 @@ The body of the advice is in BODY."
   (setq shr-external-browser 'browse-url-generic))
 
 (use-package ispell
-  :defer t
   :config
   (progn
     (setq ispell-program-name "aspell" ; use aspell instead of ispell
@@ -334,10 +332,9 @@ The body of the advice is in BODY."
 
 (use-package company
   :ensure t
-  :defer t
-  :idle (global-company-mode)
   :config
   (progn
+    (global-company-mode)
     ;; Use Company for completion
     (bind-key [remap completion-at-point] #'company-complete company-mode-map)
     (setq company-tooltip-align-annotations t
@@ -347,8 +344,7 @@ The body of the advice is in BODY."
 
 (use-package hungry-delete
   :ensure t
-  :defer t
-  :idle (global-hungry-delete-mode))
+  :config (global-hungry-delete-mode))
 
 (use-package highlight-symbol
   :ensure t
@@ -357,31 +353,25 @@ The body of the advice is in BODY."
 
 (use-package paradox ; Better package menu
   :ensure t
-  :defer t
   :config
   ;; Don't ask for a token, please
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
 (use-package puppet-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package markdown-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package lua-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package go-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package dockerfile-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package elfeed
   :ensure t

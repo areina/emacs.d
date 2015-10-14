@@ -387,7 +387,16 @@ The body of the advice is in BODY."
   :ensure t
   :defer t
   :config
-  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)))
+  (setf url-queue-timeout 60)
+  (setq elfeed-search-title-max-width 160)
+  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory))
+  :init
+  (progn
+    (use-package elfeed-org
+      :ensure t
+      :init
+      (progn
+	(elfeed-org)))))
 
 (use-package find-func
   :bind (("C-x F" . find-function-at-point)

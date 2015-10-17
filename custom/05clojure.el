@@ -4,9 +4,11 @@
 ;;
 ;;; Code:
 
+(use-package clojure-mode
+  :ensure t)
+
 (use-package cider
   :ensure t
-  :defer t
   :config
   (progn
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
@@ -18,6 +20,14 @@
     (setq cider-repl-result-prefix ";; => ")
     (setq cider-repl-history-size 1000)
     (setq cider-repl-history-file (expand-file-name ".cider_repl_history" user-emacs-directory))))
+
+(use-package clj-refactor
+  :ensure t
+  :config
+  (progn
+    (add-hook 'clojure-mode-hook (lambda ()
+				   (clj-refactor-mode 1)
+				   (cljr-add-keybindings-with-prefix "C-c C-m")))))
 
 (provide '05clojure)
 ;;; 05clojure.el ends here

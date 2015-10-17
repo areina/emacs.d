@@ -23,7 +23,7 @@
       (erc-autojoin-mode t)
       (setq erc-join-buffer 'bury
 	    erc-autojoin-channels-alist
-	    (list `(".*\\.freenode.net" ,@irc-freenode-auto-join-channels)))))
+	    (list `(".*\\.freenode.net" ,@private-irc-freenode-auto-join-channels)))))
 
     (use-package erc-track
       :config
@@ -116,7 +116,7 @@
 	  jabber-alert-presence-hooks nil
 	  jabber-account-list `(("areina0@gmail.com"
 				 (:network-server . "talk.google.com")
-				 (:password . ,gmail-jabber-passwd)
+				 (:password . ,private-gmail-jabber-passwd)
 				 (:connection-type . ssl))))))
 
 (provide '02chat)

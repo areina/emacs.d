@@ -77,6 +77,10 @@
   :init
   (golden-ratio-mode 1))
 
+(use-package powerline
+  :ensure t
+  :init (powerline-default-theme))
+
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode

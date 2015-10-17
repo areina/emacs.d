@@ -41,10 +41,15 @@
 	whitespace-line-column nil)
   :diminish whitespace-mode)
 
-(use-package solarized
-  :ensure solarized-theme
+(use-package molokai
+  :ensure molokai-theme
   :defer t
-  :init (load-theme 'solarized-dark 'no-confirm))
+  :init (load-theme 'molokai 'no-confirm))
+
+;; (use-package solarized
+;;   :ensure solarized-theme
+;;   :defer t
+;;   :init (load-theme 'solarized-dark 'no-confirm))
 
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))

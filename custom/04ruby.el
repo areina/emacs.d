@@ -13,6 +13,10 @@
       :ensure t)
     (use-package ruby-hash-syntax
       :ensure t)
+    (use-package feature-mode
+      :ensure t)
+    (use-package slim-mode
+      :ensure t)
     (use-package yard-mode
       :ensure t
       :diminish yard-mode

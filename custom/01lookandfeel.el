@@ -81,6 +81,9 @@
   :ensure t
   :init (powerline-default-theme))
 
+(use-package beacon
+  :ensure t)
+
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode

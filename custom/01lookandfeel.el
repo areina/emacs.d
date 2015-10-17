@@ -79,8 +79,8 @@
 
 (use-package git-gutter
   :ensure t
-  :idle (global-git-gutter-mode)
   :diminish git-gutter-mode
+  :init (global-git-gutter-mode)
   :config
   (progn
     (setq git-gutter:separator-sign " ")

@@ -105,7 +105,8 @@ The body of the advice is in BODY."
 (use-package dired
   :config
   (progn
-    (setq dired-recursive-copies 'always
+    (setq dired-listing-switches "-lGaht --group-directories-first"
+	  dired-recursive-copies 'always
           dired-recursive-deletes 'always
 	  dired-dwim-target t)))
 

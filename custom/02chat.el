@@ -38,16 +38,14 @@
     (defun start-irc ()
       "Connect to IRC."
       (interactive)
-      (erc-tls :server "3scale.irc.slack.com"
-	       :port 6667
-	       :nick "toni"
-	       :password slack-nick-passwd
-	       :full-name "toni")
-      (erc :server "irc.freenode.net"
-	   :port 6667
-	   :nick "kablaam"
-	   :password irc-freenode-nick-passwd
-	   :full-name "kablaam")))
+      (erc :server private-irc-bouncer-ip
+	   :port 5000
+	   :nick private-irc-bouncer-slack-username
+	   :password private-irc-bouncer-slack-password)
+      (erc :server private-irc-bouncer-ip
+	   :port 5000
+	   :nick private-irc-bouncer-freenode-username
+	   :password private-irc-bouncer-freenode-password)))
   :config
   (progn
     (setq erc-prompt-for-nickserv-password nil
@@ -55,7 +53,8 @@
 	  erc-auto-query 'buffer
 	  erc-server-auto-reconnect t
 	  erc-server-reconnect-attempts 5
-	  erc-server-reconnect-timeout 3)
+	  erc-server-reconnect-timeout 3
+	  erc-rename-buffers t)
 
     ;; highlighting nicks
     (use-package erc-hl-nicks
@@ -84,7 +83,7 @@
       (progn
 	(add-to-list 'erc-modules 'youtube)))
     (use-package erc-replace
-      :init
+      :config
       (progn
 	(defvar toni-erc-clean-gh-new-branch-regex
 	  "New branch \"https://.*/\\(.*\\)\" was pushed by \\(.*\\)")

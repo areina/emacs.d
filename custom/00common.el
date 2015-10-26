@@ -274,6 +274,34 @@ The body of the advice is in BODY."
 (use-package wgrep-ag
   :ensure t)
 
+(use-package gnus
+  :ensure t
+  :config
+  (progn
+    (setq gnus-select-method '(nntp "news.gmane.org"))
+    (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f  %B (%c) %s%)\n")
+    (setq gnus-sum-thread-tree-indent "  ")
+    (setq gnus-sum-thread-tree-root "") ;; "\u25cf ")
+    (setq gnus-sum-thread-tree-false-root "") ;; "\u25ef ")
+    (setq gnus-sum-thread-tree-single-indent "") ;; "\u25ce ")
+    (setq gnus-sum-thread-tree-vertical        "\u2502")
+    (setq gnus-sum-thread-tree-leaf-with-other "\u251c\u2500\u25ba ")
+    (setq gnus-sum-thread-tree-single-leaf     "\u2570\u2500\u25ba ")
+    (setq gnus-summary-line-format
+	  (concat
+	   "%0{%U%R%z%}"
+	   "%3{\u2502%}" "%1{%d%}" "%3{\u2502%}" ;; date
+	   "  "
+	   "%4{%-20,20f%}"               ;; name
+	   "  "
+	   "%3{\u2502%}"
+	   " "
+	   "%1{%B%}"
+	   "%s\n"))
+    (setq gnus-summary-display-arrow t)
+    (setq gnus-fetch-old-headers 'nil)
+    (setq gnus-asynchronous t)))
+
 (use-package jenkins
   :ensure t
   :config

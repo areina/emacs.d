@@ -16,6 +16,7 @@
   :config
   (setq browse-url-generic-program (executable-find "conkeror")
 	browse-url-browser-function '(("github" . browse-url-default-browser)
+				      ("docs.google.com" . browse-url-chromium)
 				      ("." . eww-browse-url))))
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)

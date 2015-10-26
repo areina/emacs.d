@@ -274,6 +274,14 @@ The body of the advice is in BODY."
 (use-package wgrep-ag
   :ensure t)
 
+(use-package jenkins
+  :ensure t
+  :config
+  (progn
+    (setq jenkins-api-token private-jenkins-token)
+    (setq jenkins-hostname private-jenkins-url)
+    (setq jenkins-username private-jenkins-username)))
+
 (use-package eww
   :init
   (progn

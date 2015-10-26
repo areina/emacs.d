@@ -37,7 +37,7 @@
 (load "00common.el")
 (load "01lookandfeel.el")
 (load "02chat.el")
-(load "03email.el")
+(load "03news-email.el")
 (load "04ruby.el")
 (load "05clojure.el")
 (load "06org.el")

@@ -274,34 +274,6 @@ The body of the advice is in BODY."
 (use-package wgrep-ag
   :ensure t)
 
-(use-package gnus
-  :ensure t
-  :config
-  (progn
-    (setq gnus-select-method '(nntp "news.gmane.org"))
-    (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f  %B (%c) %s%)\n")
-    (setq gnus-sum-thread-tree-indent "  ")
-    (setq gnus-sum-thread-tree-root "") ;; "\u25cf ")
-    (setq gnus-sum-thread-tree-false-root "") ;; "\u25ef ")
-    (setq gnus-sum-thread-tree-single-indent "") ;; "\u25ce ")
-    (setq gnus-sum-thread-tree-vertical        "\u2502")
-    (setq gnus-sum-thread-tree-leaf-with-other "\u251c\u2500\u25ba ")
-    (setq gnus-sum-thread-tree-single-leaf     "\u2570\u2500\u25ba ")
-    (setq gnus-summary-line-format
-	  (concat
-	   "%0{%U%R%z%}"
-	   "%3{\u2502%}" "%1{%d%}" "%3{\u2502%}" ;; date
-	   "  "
-	   "%4{%-20,20f%}"               ;; name
-	   "  "
-	   "%3{\u2502%}"
-	   " "
-	   "%1{%B%}"
-	   "%s\n"))
-    (setq gnus-summary-display-arrow t)
-    (setq gnus-fetch-old-headers 'nil)
-    (setq gnus-asynchronous t)))
-
 (use-package jenkins
   :ensure t
   :config
@@ -411,34 +383,47 @@ The body of the advice is in BODY."
 (use-package dockerfile-mode
   :ensure t)
 
-(use-package elfeed
-  :ensure t
-  :defer t
-  :config
-  (setf url-queue-timeout 60)
-  (setq elfeed-search-title-max-width 160)
-  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory))
-  :init
-  (progn
-    (use-package elfeed-org
-      :ensure t
-      :init
-      (progn
-	(elfeed-org)))))
-
 (use-package find-func
   :bind (("C-x F" . find-function-at-point)
 	 ("C-x V" . find-variable-at-point)
 	 ("C-x K" . find-function-on-key)))
 
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)))
+
+(use-package swiper
+  :ensure t
+  :diminish ivy-mode
+  :init (ivy-mode 1)
+  :bind (("C-s" . swiper)
+	 ("C-r" . swiper)
+	 ("C-c C-r" . ivy-resume))
+  :config
+  (progn
+    (setq ivy-use-virtual-buffers t)))
+
+(defun endless/comment-line (n)
+  "Comment or uncomment current line and leave point after it.
+With positive prefix, apply to N lines including current one.
+With negative prefix, apply to -N lines above."
+  (interactive "p")
+  (comment-or-uncomment-region
+   (line-beginning-position)
+   (goto-char (line-end-position n)))
+  (forward-line 1)
+  (back-to-indentation))
+
+(bind-key* "C-;" #'endless/comment-line)
+
 (defun fd-switch-dictionary()
   (interactive)
   (let* ((dic ispell-current-dictionary)
-    	 (change (if (string= dic "spanish") "english" "spanish")))
+	 (change (if (string= dic "spanish") "english" "spanish")))
     (ispell-change-dictionary change)
-    (message "Dictionary switched from %s to %s" dic change)
-    ))
-(global-set-key (kbd "<f8>")   'fd-switch-dictionary)
+    (message "Dictionary switched from %s to %s" dic change)))
+
+(bind-key "<f8>" #'fd-switch-dictionary)
 
 (defun t-pull-request()
   (interactive)

@@ -1,8 +1,10 @@
-;;; 03email.el --- Email settings.
+;;; 03email.el --- News and Email settings.
 ;;
 ;;; Commentary:
 ;;
 ;; - Manage work & personal accounts with mu4e.
+;; - RSS feeds with Elfeed
+;; - News/Mailing list with gnus
 ;;
 ;; sending mail -- make sure the gnutls command line utils are installed.
 ;; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
@@ -29,6 +31,48 @@
 	smtpmail-smtp-server "smtp.gmail.com"
 	smtpmail-stream-type 'starttls
 	smtpmail-smtp-service 587))
+
+(use-package gnus
+  :ensure t
+  :config
+  (progn
+    (setq gnus-select-method '(nntp "news.gmane.org"))
+    (setq gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f  %B (%c) %s%)\n")
+    (setq gnus-sum-thread-tree-indent "  ")
+    (setq gnus-sum-thread-tree-root "") ;; "\u25cf ")
+    (setq gnus-sum-thread-tree-false-root "") ;; "\u25ef ")
+    (setq gnus-sum-thread-tree-single-indent "") ;; "\u25ce ")
+    (setq gnus-sum-thread-tree-vertical        "\u2502")
+    (setq gnus-sum-thread-tree-leaf-with-other "\u251c\u2500\u25ba ")
+    (setq gnus-sum-thread-tree-single-leaf     "\u2570\u2500\u25ba ")
+    (setq gnus-summary-line-format
+	  (concat
+	   "%0{%U%R%z%}"
+	   "%3{\u2502%}" "%1{%d%}" "%3{\u2502%}" ;; date
+	   "  "
+	   "%4{%-20,20f%}"               ;; name
+	   "  "
+	   "%3{\u2502%}"
+	   " "
+	   "%1{%B%}"
+	   "%s\n"))
+    (setq gnus-summary-display-arrow t)
+    (setq gnus-fetch-old-headers 'nil)
+    (setq gnus-asynchronous t)))
+
+(use-package elfeed
+  :ensure t
+  :config
+  (setf url-queue-timeout 120)
+  (setq elfeed-search-title-max-width 160)
+  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory))
+  :init
+  (progn
+    (use-package elfeed-org
+      :ensure t
+      :config
+      (progn
+	(elfeed-org)))))
 
 (use-package mu4e
   :defer t
@@ -67,7 +111,7 @@
     (use-package mu4e-maildirs-extension
       :ensure t
       :disabled t
-      :idle (mu4e-maildirs-extension))
+      :config (mu4e-maildirs-extension))
 
     (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 

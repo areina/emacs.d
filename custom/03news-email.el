@@ -82,6 +82,37 @@
     ;; don't save message to Sent Messages, GMail/IMAP will take care of this
     (setq mu4e-sent-messages-behavior 'delete)
     (setq mu4e-trash-folder 'custom-mu4e-trash-folder)
+
+    ;; attempt to show images when viewing messages
+    (setq mu4e-view-show-images t
+	  mu4e-show-images t
+	  mu4e-view-image-max-width 800
+	  mu4e-compose-complete-only-personal t
+	  mu4e-compose-complete-only-after "2014-01-01")
+
+    ;; (setq mu4e-html2text-command "html2text -utf8 -width 72") ;; nil "Shel command that converts HTML
+    ;; ref: http://emacs.stackexchange.com/questions/3051/how-can-i-use-eww-as-a-renderer-for-mu4e
+    (defun my-render-html-message ()
+      (let ((dom (libxml-parse-html-region (point-min) (point-max))))
+	(erase-buffer)
+	(shr-insert-document dom)
+	(goto-char (point-min))))
+
+    (setq mu4e-html2text-command 'my-render-html-message)
+
+    ;; give me ISO(ish) format date-time stamps in the header list
+    (setq  mu4e-headers-date-format "%d-%m-%Y %H:%M")
+
+    ;; the headers to show in the headers list -- a pair of a field
+    ;; and its width, with `nil' meaning 'unlimited'
+    ;; (better only use that for the last field.
+    ;; These are the defaults:
+    (setq mu4e-headers-fields
+	  '( (:date          .  20)
+	     (:flags         .   6)
+	     (:from          .  22)
+	     (:subject       .  nil)))
+
     (setq my-mu4e-account-alist
 	  '(("areina0@gmail.com"
 	     (mu4e-sent-folder "/areina0@gmail.com/[Gmail].Sent Mail")

@@ -274,6 +274,13 @@ The body of the advice is in BODY."
 (use-package wgrep-ag
   :ensure t)
 
+(use-package aggressive-indent
+  :ensure t
+  :diminish aggressive-indent-mode
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
+
 (use-package jenkins
   :ensure t
   :config

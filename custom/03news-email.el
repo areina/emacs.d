@@ -63,9 +63,18 @@
 (use-package elfeed
   :ensure t
   :config
-  (setf url-queue-timeout 120)
-  (setq elfeed-search-title-max-width 160)
-  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory))
+  (progn
+    (setq url-queue-timeout 120)
+    (setq elfeed-search-title-max-width 160)
+    (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory))
+    (setq elfeed-use-curl t)
+    (defun toni-elfeed-random-entry ()
+      (interactive)
+      (with-current-buffer (elfeed-search-buffer)
+	(goto-char (point-min))
+	(let ((num-lines (- (count-lines (point-min) (point-max)) 2)))
+	  (forward-line (random num-lines))
+	  (elfeed-search-show-entry (elfeed-search-selected :single))))))
   :init
   (progn
     (use-package elfeed-org

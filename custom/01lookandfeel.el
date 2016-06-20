@@ -41,10 +41,12 @@
 	whitespace-line-column nil)
   :diminish whitespace-mode)
 
-(use-package molokai
-  :ensure molokai-theme
-  :defer t
-  :init (load-theme 'molokai 'no-confirm))
+(if (display-graphic-p)
+    (use-package molokai
+      :ensure molokai-theme
+      :defer t
+      :init (load-theme 'molokai 'no-confirm))
+  (load-theme 'wheatgrass 'no-confirm))
 
 ;; (use-package solarized
 ;;   :ensure solarized-theme
@@ -82,9 +84,13 @@
   :init
   (golden-ratio-mode 1))
 
-(use-package powerline
-  :ensure t
-  :init (powerline-default-theme))
+(when (display-graphic-p)
+  (use-package powerline
+    :ensure t
+    :init (powerline-default-theme)
+    :config
+    (progn
+      (setq powerline-default-separator 'arrow))))
 
 (use-package beacon
   :ensure t

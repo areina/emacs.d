@@ -327,7 +327,10 @@ The body of the advice is in BODY."
 	  (define-key eww-mode-map "f" (lambda() (interactive) (eww-lnum-follow 4)))
 	  (define-key eww-mode-map "F" 'eww-lnum-universal)))))
   :config
-  (setq shr-external-browser 'browse-url-generic))
+  (setq shr-color-visible-luminance-min 85
+	shr-use-fonts nil
+	shr-inhibit-images t
+	shr-external-browser 'browse-url-generic))
 
 (use-package ispell
   :config

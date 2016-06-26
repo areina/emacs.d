@@ -134,7 +134,8 @@ The body of the advice is in BODY."
   :diminish projectile-mode
   :config
   (progn
-    (projectile-global-mode)))
+    (projectile-global-mode)
+    (setq projectile-completion-system 'ivy)))
 
 (use-package flycheck
   :ensure t

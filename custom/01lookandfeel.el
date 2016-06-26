@@ -33,7 +33,7 @@
 
 (use-package whitespace
   :init
-  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (dolist (hook '(prog-mode-hook conf-mode-hook))
     (add-hook hook #'whitespace-mode))
   :config
   (setq whitespace-style '(face indentation space-after-tab space-before-tab

@@ -93,7 +93,6 @@ The body of the advice is in BODY."
 
 (use-package slime
   :disabled t
-  :defer 5
   :config
   (progn
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
@@ -147,7 +146,6 @@ The body of the advice is in BODY."
 
 (use-package yasnippet
   :ensure t
-  :defer 5
   :config
   (progn
     (yas-global-mode t)

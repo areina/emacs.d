@@ -45,7 +45,7 @@
   "Never kill scratch buffer."
   (let ((buffer-to-kill (ad-get-arg 0)))
     (if (equal buffer-to-kill "*scratch*")
-        (bury-buffer)
+	(bury-buffer)
       ad-do-it)))
 
 ;; auto saving
@@ -151,8 +151,8 @@
   (progn
     (yas-global-mode t)
     (setq yas-verbosity 1
-          yas-prompt-functions '(yas-ido-prompt)
-          yas-snippet-dirs (expand-file-name "snippets" user-emacs-directory))))
+	  yas-prompt-functions '(yas-ido-prompt)
+	  yas-snippet-dirs (expand-file-name "snippets" user-emacs-directory))))
 
 (use-package vlf
   :ensure t)
@@ -332,7 +332,7 @@
 (use-package highlight-symbol
   :ensure t
   :bind (("M-n" . highlight-symbol-next)
-         ("M-p" . highlight-symbol-prev)))
+	 ("M-p" . highlight-symbol-prev)))
 
 (use-package paradox ; Better package menu
   :ensure t

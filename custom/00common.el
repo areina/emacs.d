@@ -10,10 +10,6 @@
 (setq make-backup-files nil)
 (setq history-length 1000)
 
-;; Font size
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-
 ;; Initial major mode is Emacs Lisp mode
 (setq initial-major-mode 'emacs-lisp-mode)
 
@@ -26,16 +22,20 @@
 
 ;;; Bindings
 
-;; Backward kill word
-(bind-key "C-w"      'backward-kill-word)
-(bind-key "C-x C-k"  'kill-region)
-(bind-key "\C-c C-k" 'kill-region)
-(bind-key "C-x \\"   'align-current)
-
-;;http://endlessparentheses.com/Meta-Binds-Part-1%253A-Drunk-in-the-Dark.html
-(global-set-key "\M-9" 'backward-sexp)
-(global-set-key "\M-0" 'forward-sexp)
-(global-set-key "\M-1" 'delete-other-windows)
+(bind-keys
+ :map global-map
+ ;; Font size
+ ("C-+" . text-scale-increase)
+ ("C--" . text-scale-decrease)
+ ;; kill bindings
+ ("C-w" . backward-kill-word)
+ ("C-x C-k" . kill-current-buffer)
+ ("C-c C-k" . kill-region)
+ ("C-x \\" . align-current)
+ ;;http://endlessparentheses.com/Meta-Binds-Part-1%253A-Drunk-in-the-Dark.html
+ ("M-9" . backward-sexp)
+ ("M-0" . forward-sexp)
+ ("M-1" . delete-other-windows))
 
 (setq tab-always-indent 'complete)
 
@@ -462,6 +462,10 @@ With negative prefix, apply to -N lines above."
   "Get your public IP using dig and opendns."
   (let ((cmd "dig +short myip.opendns.com @resolver1.opendns.com"))
     (replace-regexp-in-string "\n" "" (shell-command-to-string cmd))))
+
+(defun kill-current-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
 
 (provide '00common)
 ;;; 00common.el ends here

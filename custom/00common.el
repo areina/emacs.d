@@ -37,6 +37,8 @@
 (global-set-key "\M-0" 'forward-sexp)
 (global-set-key "\M-1" 'delete-other-windows)
 
+(setq tab-always-indent 'complete)
+
 ;; defadvices
 
 (defadvice kill-buffer (around kill-buffer-around-advice activate)

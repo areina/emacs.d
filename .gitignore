@@ -16,3 +16,8 @@ tramp
 elpa
 .sx
 elfeed/
+.smex-items
+eshell/
+ido.last
+projectile.cache
+recentf

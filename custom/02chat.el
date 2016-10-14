@@ -109,14 +109,13 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (setq jabber-chat-buffer-show-avatar nil
-	  jabber-vcard-avatars-retrieve nil
-	  jabber-alert-presence-hooks nil
-	  jabber-account-list `(("areina0@gmail.com"
-				 (:network-server . "talk.google.com")
-				 (:password . ,private-gmail-jabber-passwd)
-				 (:connection-type . ssl))))))
+  (validate-setq jabber-chat-buffer-show-avatar nil
+		 jabber-vcard-avatars-retrieve nil
+		 jabber-alert-presence-hooks nil
+		 jabber-account-list `(("areina0@gmail.com"
+					(:network-server . "talk.google.com")
+					(:password . ,private-gmail-jabber-passwd)
+					(:connection-type . ssl)))))
 
 (provide '02chat)
 ;;; 02chat.el ends here

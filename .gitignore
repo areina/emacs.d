@@ -17,6 +17,7 @@ elpa
 .sx
 elfeed/
 .smex-items
+smex-items
 eshell/
 ido.last
 projectile.cache

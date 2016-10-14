@@ -88,64 +88,61 @@
   :commands mu4e
   :config
   (progn
+    ;; (add-hook 'message-setup-hook 'mml-secure-message-sign-encrypt)
     ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-    (setq mu4e-sent-messages-behavior 'delete)
-    (setq mu4e-trash-folder 'custom-mu4e-trash-folder)
-
-    ;; attempt to show images when viewing messages
-    (setq mu4e-view-show-images t
-	  mu4e-show-images t
-	  mu4e-view-image-max-width 800
+    (setq mu4e-trash-folder 'custom-mu4e-trash-folder
 	  mu4e-compose-complete-only-personal t
-	  mu4e-compose-complete-only-after "2014-01-01")
+	  mu4e-compose-complete-only-after "2014-01-01"
+	  mml-secure-openpgp-signers '("7BC12868")
+	  mu4e-html2text-command 'toni-mu4e-shr2text
+	  mu4e-headers-date-format "%d-%m-%Y %H:%M"
 
-    ;; (setq mu4e-html2text-command "html2text -utf8 -width 72") ;; nil "Shel command that converts HTML
-    ;; ref: http://emacs.stackexchange.com/questions/3051/how-can-i-use-eww-as-a-renderer-for-mu4e
-    (defun my-render-html-message ()
-      (let ((dom (libxml-parse-html-region (point-min) (point-max))))
-	(erase-buffer)
-	(shr-insert-document dom)
-	(goto-char (point-min))))
+	  mu4e-headers-fields '((:date          .  20)
+				(:flags         .   6)
+				(:from          .  22)
+				(:subject       .  nil))
 
-    (setq mu4e-html2text-command 'my-render-html-message)
-
-    ;; give me ISO(ish) format date-time stamps in the header list
-    (setq  mu4e-headers-date-format "%d-%m-%Y %H:%M")
-
-    ;; the headers to show in the headers list -- a pair of a field
-    ;; and its width, with `nil' meaning 'unlimited'
-    ;; (better only use that for the last field.
-    ;; These are the defaults:
-    (setq mu4e-headers-fields
-	  '( (:date          .  20)
-	     (:flags         .   6)
-	     (:from          .  22)
-	     (:subject       .  nil)))
-
-    (setq my-mu4e-account-alist
-	  '(("areina0@gmail.com"
-	     (mu4e-sent-folder "/areina0@gmail.com/[Gmail].Sent Mail")
-	     (mu4e-drafts-folder "/areina0@gmail.com/[Gmail].Drafts")
-	     (mu4e-trash-folder  "/areina0@gmail.com/[Gmail].Trash")
-	     (user-mail-address "areina0@gmail.com")
-	     (smtpmail-smtp-user "areina0@gmail.com"))
-	    ("toni@3scale.net"
-	     (mu4e-sent-folder "/toni@3scale.net/[Gmail].Sent Mail")
-	     (mu4e-drafts-folder "/toni@3scale.net/[Gmail].Drafts")
-	     (mu4e-trash-folder  "/toni@3scale.net/[Gmail].Trash")
-	     (user-mail-address "toni@3scale.net")
-	     (smtpmail-smtp-user "toni@3scale.net"))))
-    (setq mu4e-maildir (expand-file-name "~/Maildir")
-	  mu4e-compose-signature nil
-	  mu4e-user-mail-address-list '("areina0@gmail.com" "toni@3scale.net")
-	  mu4e-get-mail-command "true"
-	  mu4e-compose-dont-reply-to-self t
-	  mu4e-update-interval  120
-	  mu4e-sent-folder "/areina0@gmail.com/[Gmail].Sent Mail"
-	  mu4e-drafts-folder "/areina0@gmail.com/[Gmail].Drafts"
-	  mu4e-trash-folder  "/areina0@gmail.com/[Gmail].Trash"
 	  message-send-mail-function 'smtpmail-send-it
-	  user-full-name "Toni Reina"))
+	  mu4e-maildir "~/Maildir")
+
+    (setq mu4e-contexts
+	  `( ,(make-mu4e-context
+	       :name "Gmail"
+	       :enter-func (lambda ()
+			     (mu4e-message "Switch to the Gmail account context"))
+	       ;; leave-func not defined
+	       :match-func (lambda (msg)
+			     (when msg
+			       (mu4e-message-contact-field-matches msg
+								   :to "areina0@gmail.com")))
+	       :vars '((user-mail-address . "areina0@gmail.com")
+		       (user-full-name . "Toni Reina")
+		       (mu4e-sent-messages-behavior . ,'delete)
+		       (smtpmail-smtp-user . "areina0@gmail.com")
+		       (mu4e-drafts-folder . "/areina0@gmail.com/[Gmail].Drafts")
+		       (mu4e-sent-folder . "/areina0@gmail.com/[Gmail].Sent Mail")
+		       (mu4e-trash-folder . "/areina0@gmail.com/[Gmail].Trash")
+		       (mu4e-compose-signature . nil)
+		       (mu4e-maildir-shortcuts . (("/areina0@gmail.com/INBOX" . ?i)))))
+	     ,(make-mu4e-context
+	       :name "Riseup"
+	       :enter-func (lambda ()
+			     (mu4e-message "Switch to the Riseup account context"))
+	       ;; leave-fun not defined
+	       :match-func (lambda (msg)
+			     (when msg
+			       (mu4e-message-contact-field-matches msg
+								   :to "areina@riseup.net")))
+	       :vars `((user-mail-address . "areina@riseup.net" )
+		       (user-full-name . "Toni Reina")
+		       (mu4e-sent-messages-behavior . ,'sent)
+		       (mu4e-drafts-folder . "/areina@riseup.net/Drafts")
+		       (mu4e-sent-folder . "/areina@riseup.net/Sent")
+		       (mu4e-trash-folder . "/areina@riseup.net/Trash")
+		       (smtpmail-smtp-user . "areina@riseup.net")
+		       (smtpmail-smtp-server . "mail.riseup.net")
+		       (mu4e-maildir-shortcuts . (("/areina@riseup.net/INBOX" . ?i)))
+		       (mu4e-compose-signature . nil))))))
   :init
   (progn
     (use-package mu4e-maildirs-extension
@@ -153,16 +150,34 @@
       :disabled t
       :config (mu4e-maildirs-extension))
 
-    (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
-
     (defconst mu4e~view-url-regexp
       "\\(\\(https?\\://\\|mailto:\\)[-+\[:alnum:\].?_$%/+&#@!*~,:;=/()]+\[[:alnum:]\]\\)"
       "Regexp that matches http:/https:/mailto: URLs; match-string 1
 will contain the matched URL, if any.")
 
+    (defun toni-mu4e-shr2text ()
+      "Html to text using the shr engine; this can be used in
+`mu4e-html2text-command' in a new enough emacs. Based on code by
+Titus von der Malsburg."
+      (interactive)
+      (let ((dom (libxml-parse-html-region (point-min) (point-max)))
+	    ;; When HTML emails contain references to remote images,
+	    ;; retrieving these images leaks information. For example,
+	    ;; the sender can see when I openend the email and from which
+	    ;; computer (IP address). For this reason, it is preferrable
+	    ;; to not retrieve images.
+	    ;; See this discussion on mu-discuss:
+	    ;; https://groups.google.com/forum/#!topic/mu-discuss/gr1cwNNZnXo
+	    (shr-inhibit-images t)
+	    ;; Avoid colors in html emails.
+	    (shr-use-colors nil))
+	(erase-buffer)
+	(shr-insert-document dom)
+	(goto-char (point-min))))
+
     (defun clean-my-mu4e-inbox ()
       (interactive)
-      (mapcar (lambda (x) (apply 'move-emails-by-pattern x)) private-3scale-inbox-rules))
+      (mapcar (lambda (x) (apply 'move-emails-by-pattern x)) private-clean-inbox-rules))
 
     (defun move-emails-by-pattern (target pattern field)
       (let ((markpair (cons 'move target)))
@@ -175,24 +190,6 @@ will contain the matched URL, if any.")
 									   (or (and name (string-match pattern name))
 									       (and email (string-match pattern email))))) value)
 							    (string-match pattern (or value "")))))))))
-
-    (defun my-mu4e-set-account ()
-      "Set the account for composing a message."
-      (let* ((account
-	      (if mu4e-compose-parent-message
-		  (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-		    (string-match "/\\(.*?\\)/" maildir)
-		    (match-string 1 maildir))
-		(completing-read (format "Compose with account: (%s) "
-					 (mapconcat #'(lambda (var) (car var)) my-mu4e-account-alist "/"))
-				 (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-				 nil t nil nil (caar my-mu4e-account-alist))))
-	     (account-vars (cdr (assoc account my-mu4e-account-alist))))
-	(if account-vars
-	    (mapc #'(lambda (var)
-		      (set (car var) (cadr var)))
-		  account-vars)
-	  (error "No email account found"))))
 
     (defun custom-mu4e-trash-folder (msg)
       "Return the valid trash folder for MSG."

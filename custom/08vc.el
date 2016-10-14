@@ -41,23 +41,7 @@ On magit branch manager, add [merged] in the end of each branch line if this one
 		 (forward-line 1)
 		 (not (looking-at "^$"))))))
 
-    (advice-add 'magit-refresh-branch-manager :around #'t-magit-branches-show-merged)
-
-    (use-package magit-gh-pulls
-      :ensure t
-      :config
-      (setq magit-gh-pulls-collapse-commits t)
-      :init
-      (progn
-	(with-eval-after-load 'magit
-	  (define-key magit-mode-map "#gg" 'endless/load-gh-pulls-mode))))
-
-    (defun endless/load-gh-pulls-mode ()
-      "Start `magit-gh-pulls-mode' only after a manual request."
-      (interactive)
-      (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-      (magit-gh-pulls-mode 1)
-      (magit-gh-pulls-reload)))
+    (advice-add 'magit-refresh-branch-manager :around #'t-magit-branches-show-merged))
   :bind ("C-x g" . magit-status))
 
 (provide '08vc)

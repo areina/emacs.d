@@ -21,3 +21,5 @@ eshell/
 ido.last
 projectile.cache
 recentf
+.newsrc-dribble
+.mc-lists.el

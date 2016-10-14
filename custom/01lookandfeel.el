@@ -101,9 +101,6 @@
   (progn
     (beacon-mode 1)))
 
-(use-package focus
-  :ensure t)
-
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode

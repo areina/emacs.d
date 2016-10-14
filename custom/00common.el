@@ -170,6 +170,7 @@
 
 (use-package smex
   :ensure t
+  :disabled t
   :init (smex-initialize)
   :config
   (progn
@@ -361,14 +362,19 @@
 	 ("C-x V" . find-variable-at-point)
 	 ("C-x K" . find-function-on-key)))
 
-(use-package counsel
-  :ensure t
-  :bind (("M-x" . counsel-M-x)))
-
 (use-package swiper
   :ensure t
   :diminish ivy-mode
-  :init (ivy-mode 1)
+  :init
+  (progn
+    (ivy-mode 1)
+    (use-package counsel
+      :ensure t
+      :bind (("M-x" . counsel-M-x)
+	     ("C-x C-f" . counsel-find-file))
+      :init
+      (progn
+	(define-key read-expression-map (kbd "C-r") 'counsel-expression-history))))
   :bind (("C-s" . swiper)
 	 ("C-r" . swiper)
 	 ("C-c C-r" . ivy-resume))

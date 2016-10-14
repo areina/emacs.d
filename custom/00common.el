@@ -10,14 +10,6 @@
 (setq make-backup-files nil)
 (setq history-length 1000)
 
-;; Set default browser
-
-(use-package browse-url
-  :config
-  (setq browse-url-generic-program (executable-find "conkeror")
-	browse-url-browser-function '(("github.com" . browse-url-conkeror)
-				      ("docs.google.com" . browse-url-chromium)
-				      ("." . eww-browse-url))))
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -287,50 +279,6 @@ The body of the advice is in BODY."
     (setq jenkins-api-token private-jenkins-token)
     (setq jenkins-hostname private-jenkins-url)
     (setq jenkins-username private-jenkins-username)))
-
-(use-package eww
-  :init
-  (progn
-    (defun oww-down (arg)
-      (interactive "p")
-      (if (bolp)
-	  (progn
-	    (forward-paragraph arg)
-	    (forward-line 1))
-	(line-move arg)))
-
-    (defun oww-up (arg)
-      (interactive "p")
-      (if (bolp)
-	  (progn
-	    (forward-line -1)
-	    (backward-paragraph arg)
-	    (forward-line 1))
-	(line-move (- arg))))
-
-    (defun oww-mode-hook ()
-      (define-key eww-mode-map "o" 'eww)
-      (define-key eww-mode-map "n" 'oww-down)
-      (define-key eww-mode-map "N" 'eww-next-url)
-      (define-key eww-mode-map "p" 'oww-up)
-      (define-key eww-mode-map "P" 'eww-previous-url)
-      (define-key eww-mode-map "v" 'recenter-top-bottom)
-      (define-key eww-mode-map "V" 'eww-view-source))
-
-    (add-hook 'eww-mode-hook 'oww-mode-hook)
-    (use-package eww-lnum
-      :ensure t
-      :defer t
-      :init
-      (progn
-	(with-eval-after-load 'eww
-	  (define-key eww-mode-map "f" (lambda() (interactive) (eww-lnum-follow 4)))
-	  (define-key eww-mode-map "F" 'eww-lnum-universal)))))
-  :config
-  (setq shr-color-visible-luminance-min 85
-	shr-use-fonts nil
-	shr-inhibit-images t
-	shr-external-browser 'browse-url-generic))
 
 (use-package ispell
   :config

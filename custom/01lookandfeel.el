@@ -10,9 +10,11 @@
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
-;; Time
-(setq display-time-day-and-date t display-time-24hr-format t)
-(display-time)
+(use-package time
+  :init (display-time)
+  :config
+  (setq display-time-day-and-date t
+	display-time-24hr-format t))
 
 ;; Do not show startup message
 (setq inhibit-startup-message t)

@@ -169,13 +169,12 @@ The body of the advice is in BODY."
 
 (use-package google-translate
   :ensure t
-  :init
-  (progn
-    (setq google-translate-default-target-language "es")
-    (setq google-translate-default-source-language "en"))
+  :config
+  (setq google-translate-default-target-language "es"
+	google-translate-default-source-language "en")
   :bind (("C-x t" . google-translate-at-point)
 	 ("C-x T" . google-translate-query-translate)
-	 ("C-x r" . google-translate-at-point-reverse)
+	 ;; ("C-x r" . google-translate-at-point-reverse) ;; C-x r is for bookmarks
 	 ("C-x R" . google-translate-query-translate-reverse)))
 
 (use-package web-mode

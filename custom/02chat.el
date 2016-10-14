@@ -20,10 +20,10 @@
     (use-package erc-join
       :config
       (progn
-      (erc-autojoin-mode t)
-      (setq erc-join-buffer 'bury
-	    erc-autojoin-channels-alist
-	    (list `(".*\\.freenode.net" ,@private-irc-freenode-auto-join-channels)))))
+	(erc-autojoin-mode t)
+	(setq erc-join-buffer 'bury
+	      erc-autojoin-channels-alist
+	      (list `(".*\\.freenode.net" ,@private-irc-freenode-auto-join-channels)))))
 
     (use-package erc-track
       :config
@@ -38,18 +38,14 @@
     (defun start-irc ()
       "Connect to IRC."
       (interactive)
-      (erc :server private-irc-bouncer-ip
-	   :port 5000
-	   :nick private-irc-bouncer-slack-username
-	   :password private-irc-bouncer-slack-password)
-      (erc :server private-irc-bouncer-ip
-	   :port 5000
-	   :nick private-irc-bouncer-freenode-username
-	   :password private-irc-bouncer-freenode-password)))
+      (erc :server "irc.freenode.net"
+	   :port 6667
+	   :nick private-irc-freenode-username
+	   :password private-irc-freenode-password)))
   :config
   (progn
     (setq erc-prompt-for-nickserv-password nil
-          erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE")
+	  erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE")
 	  erc-auto-query 'buffer
 	  erc-server-auto-reconnect t
 	  erc-server-reconnect-attempts 5

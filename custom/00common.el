@@ -238,25 +238,66 @@
   :bind (("C-c r" . vr/query-replace)
 	 ("C-c R" . vr/replace)))
 
-
 (use-package delsel ; Delete the selection instead of insert
   :config
   (delete-selection-mode))
 
-(use-package smartparens
-  :ensure t
-  :commands (smartparens-mode show-smartparens-mode)
-  :config (require 'smartparens-config))
+;; https://ebzzry.github.io/emacs-pairs.html
+(use-package smartparens-config
+  :ensure smartparens
+  :config
+  (progn
+    (show-smartparens-global-mode 1))
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+    (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode))
+  :bind (("C-M-a" . sp-beginning-of-sexp)
+	 ("C-M-e" . sp-end-of-sexp)
 
-;; (use-package smartparens-config
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (setq sp-ignore-modes-list (append sp-ignore-modes-list '(magit-log-mode magit-key-mode)))
-;;     (smartparens-global-mode 1)
-;;     (show-smartparens-global-mode 1)
-;;     (define-key sp-keymap (kbd "M-s") 'sp-splice-sexp)
-;;     (define-key sp-keymap (kbd "C-<right>") #'sp-forward-slurp-sexp)))
+	 ("C-<down>" . sp-down-sexp)
+	 ("C-<up>"   . sp-up-sexp)
+	 ("M-<down>" . sp-backward-down-sexp)
+	 ("M-<up>"   . sp-backward-up-sexp)
+
+	 ("C-M-f" . sp-forward-sexp)
+	 ("C-M-b" . sp-backward-sexp)
+
+	 ("C-M-n" . sp-next-sexp)
+	 ("C-M-p" . sp-previous-sexp)
+
+	 ("C-S-f" . sp-forward-symbol)
+	 ("C-S-b" . sp-backward-symbol)
+
+	 ("C-<right>" . sp-forward-slurp-sexp)
+	 ("M-<right>" . sp-forward-barf-sexp)
+	 ("C-<left>"  . sp-backward-slurp-sexp)
+	 ("M-<left>"  . sp-backward-barf-sexp)
+
+	 ("C-M-t" . sp-transpose-sexp)
+	 ("C-M-k" . sp-kill-sexp)
+	 ("C-k"   . sp-kill-hybrid-sexp)
+	 ("M-k"   . sp-backward-kill-sexp)
+	 ("C-M-w" . sp-copy-sexp)
+
+	 ("C-M-d" . delete-sexp)
+
+	 ("M-<backspace>" . backward-kill-word)
+	 ("C-<backspace>" . sp-backward-kill-word)
+	 ([remap sp-backward-kill-word] . backward-kill-word)
+
+	 ("M-[" . sp-backward-unwrap-sexp)
+	 ("M-]" . sp-unwrap-sexp)
+
+	 ("C-x C-t" . sp-transpose-hybrid-sexp)
+
+	 ("C-c ("  . wrap-with-parens)
+	 ("C-c ["  . wrap-with-brackets)
+	 ("C-c {"  . wrap-with-braces)
+	 ("C-c '"  . wrap-with-single-quotes)
+	 ("C-c \"" . wrap-with-double-quotes)
+	 ("C-c _"  . wrap-with-underscores)
+	 ("C-c `"  . wrap-with-back-quotes)))
 
 (use-package esup
   :ensure t)

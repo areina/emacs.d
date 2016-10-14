@@ -21,8 +21,8 @@
 
 ;; Default font
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata:pixelsize=20:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true"))
-(set-frame-font "Inconsolata:pixelsize=20:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
+             '(font . "Inconsolata:pixelsize=18:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true"))
+(set-frame-font "Inconsolata:pixelsize=18:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
 
 ;; Remove selected region if typing
 (pending-delete-mode 0)

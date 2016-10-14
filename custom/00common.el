@@ -15,7 +15,7 @@
 (use-package browse-url
   :config
   (setq browse-url-generic-program (executable-find "conkeror")
-	browse-url-browser-function '(("github" . browse-url-default-browser)
+	browse-url-browser-function '(("github.com" . browse-url-conkeror)
 				      ("docs.google.com" . browse-url-chromium)
 				      ("." . eww-browse-url))))
 ;; Font size
@@ -107,7 +107,7 @@ The body of the advice is in BODY."
   (progn
     (setq dired-listing-switches "-lGaht --group-directories-first"
 	  dired-recursive-copies 'always
-          dired-recursive-deletes 'always
+	  dired-recursive-deletes 'always
 	  dired-dwim-target t)))
 
 (use-package ido
@@ -206,7 +206,7 @@ The body of the advice is in BODY."
 
 (use-package browse-kill-ring
   :ensure t
-  :bind (("C-c y" . browse-kill-ring)))
+  :bind (("s-y" . browse-kill-ring)))
 
 (use-package align
   :bind (("C-c A a" . align)

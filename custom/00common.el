@@ -281,11 +281,20 @@ The body of the advice is in BODY."
     (setq jenkins-username private-jenkins-username)))
 
 (use-package ispell
+  :ensure t
   :config
+  (setq ispell-program-name "aspell" ; use aspell instead of ispell
+	ispell-extra-args '("--sug-mode=ultra")
+	ispell-list-command "--list")
+  :init
   (progn
-    (setq ispell-program-name "aspell" ; use aspell instead of ispell
-	  ispell-extra-args '("--sug-mode=ultra")
-	  ispell-list-command "--list")))
+    (defun fd-switch-dictionary()
+      (interactive)
+      (let* ((dic ispell-current-dictionary)
+	     (change (if (string= dic "spanish") "english" "spanish")))
+	(ispell-change-dictionary change)
+	(message "Dictionary switched from %s to %s" dic change))))
+  :bind (("<f8>" . fd-switch-dictionary)))
 
 (use-package flyspell
   :init
@@ -294,8 +303,7 @@ The body of the advice is in BODY."
       (add-hook hook 'turn-on-flyspell))
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
   :config
-  (progn
-    (setq flyspell-issue-message-flag nil)))
+  (setq flyspell-issue-message-flag nil))
 
 (use-package company
   :ensure t
@@ -372,15 +380,6 @@ With negative prefix, apply to -N lines above."
   (back-to-indentation))
 
 (bind-key* "C-;" #'endless/comment-line)
-
-(defun fd-switch-dictionary()
-  (interactive)
-  (let* ((dic ispell-current-dictionary)
-	 (change (if (string= dic "spanish") "english" "spanish")))
-    (ispell-change-dictionary change)
-    (message "Dictionary switched from %s to %s" dic change)))
-
-(bind-key "<f8>" #'fd-switch-dictionary)
 
 (defun t-pull-request()
   (interactive)

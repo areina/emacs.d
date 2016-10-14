@@ -126,15 +126,14 @@
   :ensure t
   :diminish projectile-mode
   :config
-  (progn
-    (projectile-global-mode)
-    (setq projectile-completion-system 'ivy))
+  (setq projectile-completion-system 'ivy)
   :init
   (progn
+    (projectile-global-mode)
     (defun toni-android-reload ()
       (interactive)
       (projectile-with-default-dir (projectile-project-root)
-				   (async-shell-command "script/reload-android-app"))))
+	(async-shell-command "script/reload-android-app"))))
   :bind (("C-c ." . toni-android-reload)))
 
 (use-package flycheck

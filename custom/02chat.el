@@ -129,7 +129,7 @@ switch back to the last non-ERC buffer visited.  Next is defined by
     (cond (erc-modified-channels-alist
 	   ;; if we're not in erc-mode, set this buffer to return to
 	   (unless (eq major-mode 'erc-mode)
-	     (validate-setq erc-track-last-non-erc-buffer (current-buffer)))
+	     (setq erc-track-last-non-erc-buffer (current-buffer)))
 	   ;; hack
 	   (when (eq major-mode 'erc-mode)
 	     (endless/bury-buffer))
@@ -146,7 +146,7 @@ switch back to the last non-ERC buffer visited.  Next is defined by
 
 (defun erc-track-reset ()
   (interactive)
-  (validate-setq erc-modified-channels-alist nil)
+  (setq erc-modified-channels-alist nil)
   (erc-modified-channels-update))
 
 ;;
@@ -157,13 +157,13 @@ switch back to the last non-ERC buffer visited.  Next is defined by
   :ensure t
   :defer t
   :config
-  (validate-setq jabber-chat-buffer-show-avatar nil
-		 jabber-vcard-avatars-retrieve nil
-		 jabber-alert-presence-hooks nil
-		 jabber-account-list `(("areina0@gmail.com"
-					(:network-server . "talk.google.com")
-					(:password . ,private-gmail-jabber-passwd)
-					(:connection-type . ssl)))))
+  (setq jabber-chat-buffer-show-avatar nil
+	jabber-vcard-avatars-retrieve nil
+	jabber-alert-presence-hooks nil
+	jabber-account-list `(("areina0@gmail.com"
+			       (:network-server . "talk.google.com")
+			       (:password . ,private-gmail-jabber-passwd)
+			       (:connection-type . ssl)))))
 
 (provide '02chat)
 ;;; 02chat.el ends here

@@ -16,14 +16,14 @@
 (use-package eww
   :ensure t
   :config
-  (validate-setq shr-use-fonts nil
-		 shr-inhibit-images t
-		 shr-external-browser 'browse-url-generic)
+  (setq shr-use-fonts nil
+	shr-inhibit-images t
+	shr-external-browser 'browse-url-generic)
   :init
   (progn
     (use-package :shr-color
       :config
-      (validate-setq shr-color-visible-luminance-min 85))
+      (setq shr-color-visible-luminance-min 85))
     (defun oww-down (arg)
       (interactive "p")
       (if (bolp)

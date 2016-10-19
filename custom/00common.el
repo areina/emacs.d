@@ -29,8 +29,8 @@
  ("C--" . text-scale-decrease)
  ;; kill bindings
  ("C-w" . backward-kill-word)
- ("C-x C-k" . kill-current-buffer)
- ("C-c C-k" . kill-region)
+ ("C-x M-k" . kill-current-buffer)
+ ("C-x C-k" . kill-region)
  ("C-x \\" . align-current)
  ;;http://endlessparentheses.com/Meta-Binds-Part-1%253A-Drunk-in-the-Dark.html
  ("M-9" . backward-sexp)

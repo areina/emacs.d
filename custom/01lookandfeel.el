@@ -16,13 +16,10 @@
   (setq display-time-day-and-date t
 	display-time-24hr-format t))
 
-;; Do not show startup message
 (setq inhibit-startup-message t)
 
-;; Default font
-(add-to-list 'default-frame-alist
-             '(font . "Inconsolata:pixelsize=18:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true"))
-(set-frame-font "Inconsolata:pixelsize=18:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
+(when (display-graphic-p)
+  (set-frame-font "Fira Mono 11"))
 
 ;; Remove selected region if typing
 (pending-delete-mode 0)
@@ -44,16 +41,12 @@
   :diminish whitespace-mode)
 
 (if (display-graphic-p)
-    (use-package molokai
-      :ensure molokai-theme
-      :defer t
-      :init (load-theme 'molokai 'no-confirm))
+    (use-package zerodark
+      :ensure zerodark-theme
+      :init
+      (progn (load-theme 'zerodark 'no-confirm)
+	     (zerodark-setup-modeline-format)))
   (load-theme 'wheatgrass 'no-confirm))
-
-;; (use-package solarized
-;;   :ensure solarized-theme
-;;   :defer t
-;;   :init (load-theme 'solarized-dark 'no-confirm))
 
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
@@ -85,14 +78,6 @@
   :diminish " φ"
   :init
   (golden-ratio-mode 1))
-
-(when (display-graphic-p)
-  (use-package powerline
-    :ensure t
-    :init (powerline-default-theme)
-    :config
-    (progn
-      (setq powerline-default-separator 'arrow))))
 
 (use-package beacon
   :ensure t

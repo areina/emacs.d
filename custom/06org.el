@@ -17,8 +17,21 @@
 				   "~/.emacs.d/org/refmob.org"
 				   "~/.emacs.d/org/refile.org"))
 	  org-todo-keywords
-	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE"))
-	  org-ellipsis "⤵")))
+	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))))
+
+(use-package org-bullets
+  :ensure t
+  :defer t
+  :config
+  (progn
+    ;; org-bullets-bullet-list
+    ;; default: "◉ ○ ✸ ✿"
+    ;; large: ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
+    ;; Small: ► • ★ ▸
+    ;; others: ▼, ⤵, ↴, ⬎, ⤷,…, and ⋱.
+    (setq org-bullets-bullet-list '("◆")
+	  org-ellipsis " ⤵")
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 
 (use-package org-capture
   :defer t

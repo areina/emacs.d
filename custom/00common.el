@@ -125,6 +125,9 @@
   :ensure t
   :mode ("\\.yml$" . yaml-mode))
 
+(use-package nix-mode
+  :ensure t)
+
 (use-package smex
   :ensure t
   :disabled t

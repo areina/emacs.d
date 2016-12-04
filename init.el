@@ -44,6 +44,21 @@
 (load "07elisp.el")
 (load "08vc.el")
 (load "09browsers.el")
+(load "10scala.el")
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (eww-lnum ensime zerodark-theme yard-mode yaml-mode wgrep-ag web-mode vlf visual-regexp use-package toml-mode smartparens slim-mode ruby-tools ruby-hash-syntax rspec-mode robe rhtml-mode restclient rainbow-mode rainbow-delimiters puppet-mode projectile prodigy paradox org-bullets nix-mode markdown-mode lua-mode jenkins jabber iedit hungry-delete highlight-symbol highlight-indentation helm-dash google-translate golden-ratio go-mode git-timemachine git-link git-gutter gist flycheck-package feature-mode expand-region esup erc-image erc-hl-nicks elisp-slime-nav elfeed-org dockerfile-mode counsel company clj-refactor browse-kill-ring beacon aurel aggressive-indent ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -43,6 +43,7 @@
 (load "06org.el")
 (load "07elisp.el")
 (load "08vc.el")
+(load "09browsers.el")
 
 (provide 'init)
 ;;; init.el ends here

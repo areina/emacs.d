@@ -48,6 +48,9 @@
 	     (zerodark-setup-modeline-format)))
   (load-theme 'wheatgrass 'no-confirm))
 
+(use-package all-the-icons
+  :ensure t)
+
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
 

@@ -256,6 +256,9 @@
 	 ("C-c _"  . wrap-with-underscores)
 	 ("C-c `"  . wrap-with-back-quotes)))
 
+(use-package eldoc
+  :diminish eldoc-mode)
+
 (use-package esup
   :ensure t)
 
@@ -317,6 +320,7 @@
 
 (use-package hungry-delete
   :ensure t
+  :diminish hungry-delete-mode
   :config (global-hungry-delete-mode))
 
 (use-package highlight-symbol

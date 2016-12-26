@@ -10,6 +10,8 @@
 	 ("\\.cljc$" . clojure-mode))
   :config
   (progn
+    (add-hook 'clojure-mode-hook (lambda () (setq mode-name "CLJ")))
+    (add-hook 'clojurescript-mode-hook (lambda () (setq mode-name "CLJS")))
     (define-clojure-indent
       (defroutes 'defun)
       (GET 2)

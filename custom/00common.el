@@ -278,14 +278,6 @@
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
 
-(use-package jenkins
-  :ensure t
-  :config
-  (progn
-    (setq jenkins-api-token private-jenkins-token)
-    (setq jenkins-hostname private-jenkins-url)
-    (setq jenkins-username private-jenkins-username)))
-
 (use-package ispell
   :ensure t
   :config
@@ -387,9 +379,6 @@
     (setq ivy-use-virtual-buffers t)))
 
 (use-package prodigy
-  :ensure t)
-
-(use-package aurel
   :ensure t)
 
 (defun endless/comment-line (n)

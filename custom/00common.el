@@ -10,9 +10,6 @@
 (setq make-backup-files nil)
 (setq history-length 1000)
 
-;; Initial major mode is Emacs Lisp mode
-(setq initial-major-mode 'emacs-lisp-mode)
-
 ;; Prefer utf8
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -341,6 +338,13 @@
   ;; Don't ask for a token, please
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
+
+(use-package elisp-mode
+  :config
+  (progn
+    ;; Initial major mode is Emacs Lisp mode
+    (setq initial-major-mode 'emacs-lisp-mode)
+    (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "ELISP")))))
 
 (use-package puppet-mode
   :ensure t)

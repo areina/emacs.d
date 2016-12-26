@@ -117,7 +117,7 @@
 								   :to "areina0@gmail.com")))
 	       :vars '((user-mail-address . "areina0@gmail.com")
 		       (user-full-name . "Toni Reina")
-		       (mu4e-sent-messages-behavior . ,'delete)
+		       (mu4e-sent-messages-behavior . 'delete)
 		       (smtpmail-smtp-user . "areina0@gmail.com")
 		       (mu4e-drafts-folder . "/areina0@gmail.com/[Gmail].Drafts")
 		       (mu4e-sent-folder . "/areina0@gmail.com/[Gmail].Sent Mail")

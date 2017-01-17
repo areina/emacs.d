@@ -274,6 +274,11 @@
 (use-package wgrep-ag
   :ensure t)
 
+(use-package persistent-scratch
+  :ensure t
+  :config
+  (persistent-scratch-setup-default))
+
 (use-package aggressive-indent
   :ensure t
   :diminish aggressive-indent-mode

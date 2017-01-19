@@ -44,5 +44,9 @@
 		("w" "org-protocol" entry (file "~/.emacs.d/org/refile.org")
 		 "* TODO Review %c\n%U\n" :immediate-finish t)))))
 
+(use-package calendar
+  :config
+  (setq calendar-week-start-day 1))
+
 (provide '06org)
 ;;; 06org.el ends here

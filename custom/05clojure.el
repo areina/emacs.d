@@ -47,14 +47,14 @@
       (cider-interactive-eval "(reloaded.repl/reset)")))
   :bind (("C-c SPC" . toni-clj-reset)))
 
-  (use-package clj-refactor
-    :ensure t
-    :config
-    (progn
-      (add-hook 'clojure-mode-hook
-		(lambda ()
-		  (clj-refactor-mode 1)
-		  (cljr-add-keybindings-with-prefix "C-c C-m")))))
+(use-package clj-refactor
+  :ensure t
+  :config
+  (progn
+    (add-hook 'clojure-mode-hook
+	      (lambda ()
+		(clj-refactor-mode 1)
+		(cljr-add-keybindings-with-prefix "C-c C-m")))))
 
 (provide '05clojure)
 ;;; 05clojure.el ends here

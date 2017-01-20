@@ -8,7 +8,8 @@
 
 (use-package org
   :defer t
-  :bind (("C-c c" . org-capture))
+  :bind (("C-c l" . org-store-link)
+	 ("C-c b" . org-switchb))
   :config
   (progn
     (setq org-directory "~/.emacs.d/org"

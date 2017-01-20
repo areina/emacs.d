@@ -24,3 +24,5 @@ projectile.cache
 recentf
 .newsrc-dribble
 .mc-lists.el
+.persistent-scratch
+session.*

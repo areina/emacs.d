@@ -44,6 +44,13 @@
 		("w" "org-protocol" entry (file "~/.emacs.d/org/refile.org")
 		 "* TODO Review %c\n%U\n" :immediate-finish t)))))
 
+(use-package org-agenda
+  :bind (("C-c a" . org-agenda))
+  :config
+  (setq org-agenda-files (quote ("~/.emacs.d/org"))
+	;; Overwrite the current window with the agenda
+	org-agenda-window-setup 'current-window))
+
 (use-package calendar
   :config
   (setq calendar-week-start-day 1))

@@ -35,6 +35,7 @@
 
 (use-package org-capture
   :defer t
+  :bind (("C-c c" . org-capture))
   :config
   (setq org-capture-templates
 	(quote (("t" "todo" entry (file "~/.emacs.d/org/refile.org")

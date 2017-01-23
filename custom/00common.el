@@ -125,15 +125,6 @@
 (use-package nix-mode
   :ensure t)
 
-(use-package smex
-  :ensure t
-  :disabled t
-  :init (smex-initialize)
-  :config
-  (progn
-    (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
-  :bind ("M-x" . smex))
-
 (use-package google-translate
   :ensure t
   :config
@@ -366,6 +357,13 @@
   :bind (("C-x F" . find-function-at-point)
 	 ("C-x V" . find-variable-at-point)
 	 ("C-x K" . find-function-on-key)))
+
+(use-package smex
+  :ensure t
+  :init (smex-initialize)
+  :config
+  (progn
+    (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))))
 
 (use-package swiper
   :ensure t

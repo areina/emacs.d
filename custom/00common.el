@@ -59,6 +59,75 @@
 	  dired-recursive-deletes 'always
 	  dired-dwim-target t)))
 
+(use-package ibuffer
+  :ensure t
+  :bind ("C-x C-b" . ibuffer)
+  :config
+  (progn
+    (use-package ibuffer-vc :ensure t)
+
+    (setq ibuffer-expert t
+	  ibuffer-show-empty-filter-groups nil
+	  ibuffer-filter-group-name-face 'font-lock-doc-face)
+
+    (defvar toni/ibuffer-filter-groups
+      '(("Emacs" (or
+		  (mode . help-mode)
+		  (mode . Info-mode)
+		  (mode . apropos-mode)
+		  (mode . fundamental-mode)
+		  (mode . inferior-emacs-lisp-mode)
+		  (name . "^\\*scratch\\*$")
+		  (name . "^\\*Messages\\*$")))
+	("Org" (or
+		(mode . org-mode)
+		(mode . org-agenda-mode)))
+	("Chat" (mode . erc-mode))
+	("Email" (or
+		  (mode . mu4e-headers-mode)
+		  (mode . mu4e-view-mode)
+		  (mode . mu4e-compose-mode)
+		  (mode . mail-mode))))
+      "My custom filter groups for ibuffer")
+
+    ;; Use human readable Size column instead of original one
+    (define-ibuffer-column size-h
+      (:name "Size" :inline t)
+      (cond
+       ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+       ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+       (t (format "%8d" (buffer-size)))))
+
+    (setq ibuffer-formats
+	  '((mark modified read-only vc-status-mini " "
+		  (name 18 18 :left :elide)
+		  " "
+		  (size-h 9 -1 :right)
+		  " "
+		  (mode 16 16 :left :elide)
+		  " "
+		  filename-and-process)
+	    (mark modified read-only vc-status-mini " "
+		  (name 18 18 :left :elide)
+		  " "
+		  (size-h 9 -1 :right)
+		  " "
+		  (mode 16 16 :left :elide)
+		  " "
+		  (vc-status 16 16 :left)
+		  " "
+		  filename-and-process)))
+
+    (defun toni/ibuffer-hook ()
+      (interactive)
+      (setq ibuffer-filter-groups
+	    (append toni/ibuffer-filter-groups
+		    (ibuffer-vc-generate-filter-groups-by-vc-root)))
+      (ibuffer-auto-mode +1)
+      (ibuffer-do-sort-by-alphabetic))
+
+    (add-hook 'ibuffer-hook 'toni/ibuffer-hook)))
+
 (use-package ido
   :init (ido-mode 1)
   :config

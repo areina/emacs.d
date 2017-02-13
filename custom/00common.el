@@ -162,6 +162,7 @@
 
 (use-package flycheck
   :ensure t
+  :diminish flycheck-mode
   :init
   (progn
     (global-flycheck-mode)
@@ -363,6 +364,7 @@
   :bind (("<f8>" . fd-switch-dictionary)))
 
 (use-package flyspell
+  :diminish flyspell-mode
   :init
   (progn
     (dolist (hook '(text-mode-hook message-mode-hook))

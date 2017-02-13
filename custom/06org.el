@@ -51,7 +51,8 @@
   :config
   (setq org-agenda-files (quote ("~/.emacs.d/org"))
 	;; Overwrite the current window with the agenda
-	org-agenda-window-setup 'current-window))
+	org-agenda-window-setup 'current-window
+	org-agenda-span 'week))
 
 (use-package calendar
   :config

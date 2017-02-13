@@ -105,6 +105,12 @@
 	  message-send-mail-function 'smtpmail-send-it
 	  mu4e-maildir "~/Maildir")
 
+    (setq mu4e-org-contacts-file  (expand-file-name "contacts.org" org-directory))
+    (add-to-list 'mu4e-headers-actions
+                 '("org-contact-add" . mu4e-action-add-org-contact) t)
+    (add-to-list 'mu4e-view-actions
+                 '("org-contact-add" . mu4e-action-add-org-contact) t)
+
     (setq mu4e-contexts
 	  `( ,(make-mu4e-context
 	       :name "Gmail"

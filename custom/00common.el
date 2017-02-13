@@ -35,6 +35,8 @@
  ("M-1" . delete-other-windows))
 
 (setq tab-always-indent 'complete)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 8)
 
 ;; Packages
 

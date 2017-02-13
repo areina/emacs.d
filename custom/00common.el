@@ -404,6 +404,23 @@
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
+(use-package hideshow
+  :ensure t
+  :diminish hs-minor-mode
+  :bind (("C-c <right>" . hs-show-block)
+         ("C-c <left>"  . hs-hide-block)
+         ("C-c <up>"    . hs-hide-level)
+         ("C-c <down>"  . hs-show-all))
+  :init (add-hook 'prog-mode-hook 'hs-minor-mode)
+  :config
+  (progn
+    (add-to-list 'hs-special-modes-alist
+                 `(ruby-mode
+                   ,(rx (or "def" "class" "module" "do" "{" "[")) ; Block start
+                   ,(rx (or "}" "]" "end"))                       ; Block end
+                   ,(rx (or "#" "=begin"))                        ; Comment start
+                   ruby-forward-sexp nil))))
+
 (use-package elisp-mode
   :config
   (progn

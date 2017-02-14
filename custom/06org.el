@@ -41,8 +41,7 @@
     ;; Small: ► • ★ ▸
     ;; others: ▼, ⤵, ↴, ⬎, ⤷,…, and ⋱.
     (setq org-bullets-bullet-list '("◆")
-	  org-ellipsis " ⤵")
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+	  org-ellipsis " ⤵")))
 
 (use-package org-capture
   :defer t

@@ -109,7 +109,11 @@
 	 ("C-x v r" . git-gutter:revert-hunk)))
 
 (use-package page-break-lines
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'page-break-lines-modes 'org-agenda-mode)
+    (global-page-break-lines-mode t)))
 
 (defun my/add-watchwords ()
   "Highlight FIXME, TODO, and NOCOMMIT in code"

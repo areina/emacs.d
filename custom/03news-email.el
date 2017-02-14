@@ -93,6 +93,9 @@
     (setq mu4e-trash-folder 'custom-mu4e-trash-folder
 	  mu4e-compose-complete-only-personal t
 	  mu4e-compose-complete-only-after "2014-01-01"
+          mu4e-compose-in-new-frame t
+          mu4e-compose-context-policy 'ask-if-none
+          mu4e-view-show-addresses t
 	  mml-secure-openpgp-signers '("7BC12868")
 	  mu4e-html2text-command 'toni-mu4e-shr2text
 	  mu4e-headers-date-format "%d-%m-%Y %H:%M"

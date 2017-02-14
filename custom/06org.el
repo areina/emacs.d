@@ -26,7 +26,8 @@
 	  org-deadline-warning-days 10
           org-log-done 'time
           org-log-redeadline 'time
-          org-log-reschedule 'time')))
+          org-log-reschedule 'time
+          org-agenda-block-separator "")))
 
 (use-package org-bullets
   :ensure t
@@ -292,7 +293,7 @@ Callers of this function already widen the buffer view."
 (defun gs/org-agenda-next-section ()
   "Go to the next section in an org agenda buffer"
   (interactive)
-  (if (search-forward "===" nil t 1)
+  (if (search-forward "" nil t 1)
       (forward-line 1)
     (goto-char (point-max)))
   (beginning-of-line))
@@ -302,7 +303,7 @@ Callers of this function already widen the buffer view."
   "Go to the next section in an org agenda buffer"
   (interactive)
   (forward-line -2)
-  (if (search-forward "===" nil t -1)
+  (if (search-forward "" nil t -1)
       (forward-line 1)
     (goto-char (point-min))))
 

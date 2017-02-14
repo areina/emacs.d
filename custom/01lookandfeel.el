@@ -108,6 +108,9 @@
 	 ("C-x v =" . git-gutter:popup-hunk)
 	 ("C-x v r" . git-gutter:revert-hunk)))
 
+(use-package page-break-lines
+  :ensure t)
+
 (defun my/add-watchwords ()
   "Highlight FIXME, TODO, and NOCOMMIT in code"
   (font-lock-add-keywords

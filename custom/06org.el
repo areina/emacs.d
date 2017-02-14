@@ -14,15 +14,24 @@
   (progn
     (setq org-directory "~/.emacs.d/org"
 	  org-default-notes-file "~/.emacs.d/org/refile.org"
-	  org-agenda-files (quote ("~/.emacs.d/org/todo.org"
-				   "~/.emacs.d/org/refmob.org"
-				   "~/.emacs.d/org/refile.org"))
 	  org-todo-keywords
-	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))))
+	  (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+		  (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING")))
+	  org-refile-targets (quote ((nil :maxlevel . 9)
+				     (org-agenda-files :maxlevel . 9)))
+	  org-refile-use-outline-path t
+	  org-outline-path-complete-in-steps nil
+	  ;; Allow refile to create parent tasks with confirmation
+	  org-refile-allow-creating-parent-nodes 'confirm
+	  org-deadline-warning-days 10
+          org-log-done 'time
+          org-log-redeadline 'time
+          org-log-reschedule 'time')))
 
 (use-package org-bullets
   :ensure t
   :defer t
+  :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   :config
   (progn
     ;; org-bullets-bullet-list

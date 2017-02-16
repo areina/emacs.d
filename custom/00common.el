@@ -40,6 +40,11 @@
 
 ;; Packages
 
+(use-package pass
+  :ensure t
+  :config
+  (setq password-store-password-length 12))
+
 ;; Lisp & Slime
 
 (use-package slime

@@ -110,13 +110,14 @@
 
 (use-package page-break-lines
   :ensure t
+  :diminish page-break-lines-mode
   :config
   (progn
     (add-to-list 'page-break-lines-modes 'org-agenda-mode)
     (global-page-break-lines-mode t)))
 
 (defun my/add-watchwords ()
-  "Highlight FIXME, TODO, and NOCOMMIT in code"
+  "Highlight FIXME, TODO, and NOCOMMIT in code."
   (font-lock-add-keywords
    nil '(("\\<\\(FIXME\\|TODO\\|NOCOMMIT\\)\\>"
           1 '((:foreground "#d7a3ad") (:weight bold)) t))))

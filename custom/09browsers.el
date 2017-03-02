@@ -11,6 +11,7 @@
   (setq browse-url-generic-program (executable-find "conkeror")
 	browse-url-browser-function '(("github.com" . browse-url-conkeror)
 				      ("docs.google.com" . browse-url-chromium)
+				      ("accounts.google.com" . browse-url-chromium)
 				      ("." . eww-browse-url))))
 
 (use-package eww

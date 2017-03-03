@@ -454,9 +454,6 @@
 (use-package lua-mode
   :ensure t)
 
-(use-package go-mode
-  :ensure t)
-
 (use-package dockerfile-mode
   :ensure t)
 

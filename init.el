@@ -49,6 +49,7 @@
 (load "08vc.el")
 (load "09browsers.el")
 (load "10scala.el")
+(load "11golang.el")
 
 (provide 'init)
 ;;; init.el ends here

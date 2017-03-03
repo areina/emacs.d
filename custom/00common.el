@@ -492,6 +492,9 @@
 (use-package prodigy
   :ensure t)
 
+(use-package subword
+  :diminish subword-mode)
+
 (defun endless/comment-line (n)
   "Comment or uncomment current line and leave point after it.
 With positive prefix, apply to N lines including current one.

@@ -41,10 +41,19 @@
 
 (use-package gorepl-mode
   :ensure t
+  :diminish gorepl-mode
   :init (add-hook 'go-mode-hook #'gorepl-mode))
 
 (use-package go-dlv
   :ensure t)
+
+;; go get -u github.com/alecthomas/gometalinter
+;; gometalinter --install --update
+(use-package flycheck-gometalinter
+  :ensure t
+  :config
+  (progn
+    (flycheck-gometalinter-setup)))
 
 (provide '11golang)
 ;;; 11golang.el ends here

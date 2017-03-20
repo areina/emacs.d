@@ -80,7 +80,9 @@
   :ensure t
   :diminish " φ"
   :init
-  (golden-ratio-mode 1))
+  (golden-ratio-mode 1)
+  :config
+  (setq golden-ratio-auto-scale t))
 
 (use-package beacon
   :ensure t

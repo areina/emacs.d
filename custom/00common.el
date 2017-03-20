@@ -19,6 +19,12 @@
 
 ;;; Bindings
 
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'alt)
+  (setq mac-command-modifier 'meta)
+  ;; sets fn-delete to be right-delete
+  (global-set-key [kp-delete] 'delete-char))
+
 (bind-keys
  :map global-map
  ;; Font size
@@ -45,6 +51,15 @@
   :config
   (setq password-store-password-length 12))
 
+(use-package simple
+  :diminish auto-fill-function)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :if (equal system-type 'darwin)
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; Lisp & Slime
 
 (use-package slime
@@ -61,10 +76,12 @@
 (use-package dired
   :config
   (progn
-    (setq dired-listing-switches "-lGaht --group-directories-first"
-	  dired-recursive-copies 'always
-	  dired-recursive-deletes 'always
-	  dired-dwim-target t)))
+    (if (eq system-type 'darwin)
+        (setq dired-listing-switches "-lGaht")
+      (setq dired-listing-switches "-lGaht --group-directories-first"))
+    (setq dired-recursive-copies 'always
+          dired-recursive-deletes 'always
+          dired-dwim-target t)))
 
 (use-package ibuffer
   :ensure t
@@ -234,7 +251,7 @@
   (progn
     (setq helm-dash-min-length 1)
     (setq helm-dash-docsets-path (expand-file-name "dash-docsets" user-emacs-directory))
-    (setq helm-dash-common-docsets '("Redis" "Go" "Emacs Lisp" "Common Lisp" "Clojure"))
+    (setq helm-dash-common-docsets '("Go"))
     (setq helm-dash-browser-func 'eww)))
 
 (use-package browse-kill-ring

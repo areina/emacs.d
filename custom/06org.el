@@ -15,7 +15,7 @@
     (setq org-directory "~/.emacs.d/org"
 	  org-default-notes-file "~/.emacs.d/org/refile.org"
 	  org-todo-keywords
-	  (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+	  (quote ((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(p)" "|" "DONE(d)")
 		  (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING")))
 	  org-refile-targets (quote ((nil :maxlevel . 9)
 				     (org-agenda-files :maxlevel . 9)))

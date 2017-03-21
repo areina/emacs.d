@@ -19,7 +19,7 @@
                               ;; so that we can have a per-project setting too
                               (string-match "go" compile-command)))
                     (set (make-local-variable 'compile-command)
-                         "go build -v && go test -v && go vet && golint"))))))
+                         "GOOS=linux go build -v && go test -v && go vet && golint"))))))
 
 (use-package go-eldoc
   :ensure t)

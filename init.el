@@ -1,8 +1,6 @@
 ;;; init.el --- Initial configuration file.
 ;;
 ;;; Commentary:
-;; - Cask: Manage package dependencies
-;; - Pallet: Mantain your caskfile synced with package-install.
 ;; - use-package: Load packages and configure them.
 ;; - emacs server: yay!
 ;;

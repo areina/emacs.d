@@ -237,7 +237,19 @@
 	 ("C-x R" . google-translate-query-translate-reverse)))
 
 (use-package web-mode
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (setq web-mode-markup-indent-offset 2
+          web-mode-css-indent-offset 2
+          web-mode-code-indent-offset 2
+          web-mode-attr-indent-offset 2)))
+
+(use-package js
+  :config
+  (progn
+    (setq js-indent-level 2
+          js2-basic-offset 2)))
 
 (use-package restclient
   :ensure t)
@@ -247,6 +259,7 @@
 
 (use-package helm-dash
   :ensure t
+  :load-path "~/development/helm-dash"
   :config
   (progn
     (setq helm-dash-min-length 1)
@@ -389,7 +402,7 @@
     (defun fd-switch-dictionary()
       (interactive)
       (let* ((dic ispell-current-dictionary)
-	     (change (if (string= dic "spanish") "english" "spanish")))
+	     (change (if (string= dic "castellano") "english" "castellano")))
 	(ispell-change-dictionary change)
 	(message "Dictionary switched from %s to %s" dic change))))
   :bind (("<f8>" . fd-switch-dictionary)))
@@ -403,6 +416,19 @@
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
   :config
   (setq flyspell-issue-message-flag nil))
+
+(use-package emms
+  :ensure t
+  :config
+  (progn
+    (setq emms-source-file-default-directory "~/Music/")
+    (setq emms-mode-line-icon-color "#da8548")
+    ;; Use only libtag for tagging.
+    (require 'emms-info-libtag)
+    (setq emms-info-functions '(emms-info-libtag))
+    (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
+    (emms-standard)
+    (emms-default-players)))
 
 (use-package company
   :ensure t
@@ -495,7 +521,8 @@
     (use-package counsel
       :ensure t
       :bind (("M-x" . counsel-M-x)
-	     ("C-x C-f" . counsel-find-file))
+	     ("C-x C-f" . counsel-find-file)
+	     ("M-y" . counsel-yank-pop))
       :init
       (progn
 	(define-key read-expression-map (kbd "C-r") 'counsel-expression-history))))

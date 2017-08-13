@@ -10,10 +10,12 @@
          ("M-," . pop-tag-mark))
   :config
   (progn
+    (defvar go-tab-width 4)
     (setq gofmt-command "goimports")
     (add-hook 'go-mode-hook
               (lambda ()
                 (add-hook 'before-save-hook 'gofmt-before-save nil 'local)
+                (setq-local tab-width go-tab-width)
                 (subword-mode 1)
                 (if (not (and (stringp compile-command)
                               ;; so that we can have a per-project setting too

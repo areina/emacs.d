@@ -11,6 +11,8 @@
   :config
   (progn
     (defvar go-tab-width 4)
+    ;; depends on goimports golang tool
+    ;; go get golang.org/x/tools/cmd/goimports
     (setq gofmt-command "goimports")
     (add-hook 'go-mode-hook
               (lambda ()
@@ -23,6 +25,8 @@
                     (set (make-local-variable 'compile-command)
                          "GOOS=linux go build -v && go test -v && go vet && golint"))))))
 
+;; depends on gocode golang package
+;; go get -u github.com/nsf/gocode
 (use-package go-eldoc
   :ensure t)
 

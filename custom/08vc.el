@@ -19,6 +19,11 @@
   :ensure t
   :defer t)
 
+(use-package magithub
+  :ensure t
+  :after magit
+  :config (magithub-feature-autoinject t))
+
 (use-package magit
   :ensure t
   :init

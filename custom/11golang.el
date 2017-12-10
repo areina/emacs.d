@@ -57,6 +57,11 @@
 ;; gometalinter --install --update
 (use-package flycheck-gometalinter
   :ensure t
+  :init
+  (progn
+    (setq flycheck-gometalinter-vendor t
+          flycheck-gometalinter-fast t
+          flycheck-gometalinter-deadline "15s"))
   :config
   (progn
     (flycheck-gometalinter-setup)))

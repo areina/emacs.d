@@ -26,3 +26,5 @@ recentf
 .mc-lists.el
 .persistent-scratch
 session.*
+magithub/cache
+emms/

@@ -11,10 +11,10 @@
   (when (fboundp mode) (funcall mode -1)))
 
 (use-package time
-  :init (display-time)
-  :config
+  :config (display-time)
+  :init
   (setq display-time-day-and-date t
-	display-time-24hr-format t))
+        display-time-24hr-format t))
 
 (setq inhibit-startup-message t)
 
@@ -32,56 +32,71 @@
 
 (use-package whitespace
   :init
-  (dolist (hook '(prog-mode-hook conf-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  :config
-  (setq whitespace-style '(face indentation space-after-tab space-before-tab
-				empty trailing lines-tail)
-	whitespace-line-column nil)
+  (progn
+    (setq whitespace-style '(face indentation space-after-tab space-before-tab
+                                  empty trailing lines-tail)
+          whitespace-line-column nil)
+    (dolist (hook '(prog-mode-hook conf-mode-hook))
+      (add-hook hook #'whitespace-mode)))
   :diminish whitespace-mode)
 
-(if (display-graphic-p)
-    (use-package zerodark
-      :ensure zerodark-theme
-      :init
-      (progn (load-theme 'zerodark 'no-confirm)
-	     (zerodark-setup-modeline-format)))
-  (load-theme 'wheatgrass 'no-confirm))
+(setq use-dialog-box nil)
+
+(setq ns-use-srgb-colorspace t)
+;; Anti-aliasing
+(setq mac-allow-anti-aliasing t)
+
+(defvar laf-mood 'light)
+;;(defvar laf-mood 'dark)
+
+(if (eq laf-mood 'light)
+    (use-package leuven-theme
+      :ensure t
+      :config
+      (progn
+        (load-theme 'leuven t)))
+  (if (display-graphic-p)
+      (use-package zerodark-theme
+        :ensure zerodark-theme
+        :config
+        (progn (load-theme 'zerodark t)
+               (zerodark-setup-modeline-format)))
+    (load-theme 'wheatgrass 'no-confirm)))
 
 (use-package all-the-icons
   :ensure t)
 
 (use-package uniquify
-  :config (setq uniquify-buffer-name-style 'forward))
+  :init (setq uniquify-buffer-name-style 'forward))
 
 (use-package hl-line
-  :init (global-hl-line-mode 1))
+  :config (global-hl-line-mode 1))
 
 (use-package paren ; Highlight paired delimiters
-  :init (show-paren-mode)
-  :config (setq show-paren-when-point-inside-paren t
-		show-paren-when-point-in-periphery t))
+  :config (show-paren-mode)
+  :init (setq show-paren-when-point-inside-paren t
+              show-paren-when-point-in-periphery t))
 
 (use-package rainbow-delimiters
   :ensure t
   :defer t
   :init (dolist (hook '(text-mode-hook prog-mode-hook))
-	  (add-hook hook #'rainbow-delimiters-mode)))
+          (add-hook hook #'rainbow-delimiters-mode)))
 
 (use-package rainbow-mode
   :ensure t)
 
 (use-package hi-lock
   :defer t
-  :init (global-hi-lock-mode))
+  :config (global-hi-lock-mode))
 
 (use-package golden-ratio
   :defer t
   :ensure t
   :diminish " φ"
-  :init
-  (golden-ratio-mode 1)
   :config
+  (golden-ratio-mode 1)
+  :init
   (setq golden-ratio-auto-scale t))
 
 (use-package beacon
@@ -94,11 +109,13 @@
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode
-  :init (global-git-gutter-mode)
+  :config (global-git-gutter-mode)
+  :init
+  (progn
+    (setq git-gutter:separator-sign " "
+          git-gutter:lighter " GG"))
   :config
   (progn
-    (setq git-gutter:separator-sign " ")
-    (setq git-gutter:lighter " GG")
     (set-face-background 'git-gutter:deleted "#990A1B")
     (set-face-foreground 'git-gutter:deleted "#990A1B")
     (set-face-background 'git-gutter:modified "#00736F")
@@ -106,9 +123,9 @@
     (set-face-background 'git-gutter:added "#546E00")
     (set-face-foreground 'git-gutter:added "#546E00"))
   :bind (("C-x p" . git-gutter:previous-hunk)
-	 ("C-x n" . git-gutter:next-hunk)
-	 ("C-x v =" . git-gutter:popup-hunk)
-	 ("C-x v r" . git-gutter:revert-hunk)))
+         ("C-x n" . git-gutter:next-hunk)
+         ("C-x v =" . git-gutter:popup-hunk)
+         ("C-x v r" . git-gutter:revert-hunk)))
 
 (use-package page-break-lines
   :ensure t

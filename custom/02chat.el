@@ -14,7 +14,7 @@
 ;;
 
 (use-package erc
-  :defer t
+  :disabled t
   :init
   (progn
     (use-package erc-join
@@ -155,6 +155,7 @@ switch back to the last non-ERC buffer visited.  Next is defined by
 
 (use-package jabber
   :ensure t
+  :disabled t
   :defer t
   :config
   (setq jabber-chat-buffer-show-avatar nil

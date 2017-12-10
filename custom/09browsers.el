@@ -9,38 +9,37 @@
 (use-package browse-url
   :config
   (setq browse-url-generic-program (executable-find "conkeror")
-	browse-url-browser-function '(("github.com" . browse-url-conkeror)
-				      ("docs.google.com" . browse-url-chromium)
-				      ("accounts.google.com" . browse-url-chromium)
-				      ("." . eww-browse-url))))
+        browse-url-browser-function '(("github.com" . browse-url-conkeror)
+                                      ("docs.google.com" . browse-url-chromium)
+                                      ("accounts.google.com" . browse-url-chromium)
+                                      ("." . eww-browse-url))))
 
 (use-package eww
   :ensure t
-  :config
-  (setq shr-use-fonts nil
-	shr-inhibit-images t
-	shr-external-browser 'browse-url-generic)
   :init
   (progn
-    (use-package :shr-color
-      :config
-      (setq shr-color-visible-luminance-min 85))
+    (setq shr-use-fonts nil
+          shr-inhibit-images t
+          shr-external-browser 'browse-url-generic)
+    ;; (use-package :shr-color
+    ;;   :config
+    ;;   (setq shr-color-visible-luminance-min 85))
     (defun oww-down (arg)
       (interactive "p")
       (if (bolp)
-	  (progn
-	    (forward-paragraph arg)
-	    (forward-line 1))
-	(line-move arg)))
+          (progn
+            (forward-paragraph arg)
+            (forward-line 1))
+        (line-move arg)))
 
     (defun oww-up (arg)
       (interactive "p")
       (if (bolp)
-	  (progn
-	    (forward-line -1)
-	    (backward-paragraph arg)
-	    (forward-line 1))
-	(line-move (- arg))))
+          (progn
+            (forward-line -1)
+            (backward-paragraph arg)
+            (forward-line 1))
+        (line-move (- arg))))
 
     (defun oww-mode-hook ()
       (define-key eww-mode-map "o" 'eww)
@@ -57,6 +56,8 @@
       :defer t
       :init
       (progn
-	(with-eval-after-load 'eww
-	  (define-key eww-mode-map "f" (lambda() (interactive) (eww-lnum-follow 4)))
-	  (define-key eww-mode-map "F" 'eww-lnum-universal))))))
+        (with-eval-after-load 'eww
+          (define-key eww-mode-map "f" (lambda() (interactive) (eww-lnum-follow 4)))
+          (define-key eww-mode-map "F" 'eww-lnum-universal))))))
+
+;;; 09browsers.el ends here
